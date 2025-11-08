@@ -199,7 +199,7 @@ export default function CreateAccount() {
           >
             <Text
               style={{ fontFamily: "Poppins-Medium" }}
-              className="text-blue-500 text-base"
+              className="text-cimb-red text-base"
             >
               Already have an account? Sign In
             </Text>
