@@ -23,7 +23,6 @@ export default function CreateAccount() {
       contentContainerStyle={{ paddingBottom: 40 }}
       className="flex-1 bg-white"
     >
-      {/* Top header (white so red logo stands out) */}
       <View className="px-6 pt-8">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center space-x-3">
