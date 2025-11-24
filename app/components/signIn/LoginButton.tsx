@@ -1,74 +1,116 @@
+import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+
+interface LoginButtonProps {
+  title?: string;
+  onPress?: () => void;
+  variant?: "solid" | "outline" | "gradient";
+}
 
 export default function LoginButton({
   title = "Login",
   onPress = () => {},
-  variant = "solid", // "solid" | "outline" | "gradient"
-}) {
+  variant = "gradient",
+}: LoginButtonProps) {
+  // 🔴 Gradient premium (default)
+  if (variant === "gradient") {
+    return (
+      <View style={{ width: "100%" }}>
+        <TouchableOpacity
+          onPress={onPress}
+          activeOpacity={0.9}
+          style={{
+            borderRadius: 999,
+            overflow: "hidden",
+            shadowColor: "#000",
+            shadowOpacity: 0.25,
+            shadowRadius: 16,
+            elevation: 8,
+          }}
+        >
+          <LinearGradient
+            colors={["#C8102E", "#9E0B22"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{
+              paddingVertical: 14,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Poppins-SemiBold",
+                fontSize: 16,
+                color: "#FFFFFF",
+              }}
+            >
+              {title}
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  // 🔴 Solid
   if (variant === "solid") {
     return (
-      <View className="px-6 mt-8">
+      <View style={{ width: "100%" }}>
         <TouchableOpacity
           onPress={onPress}
           activeOpacity={0.9}
-          className="bg-cimb-red py-4 rounded-3xl items-center shadow-md"
-        >
-          <Text
-            style={{ fontFamily: "Poppins-SemiBold" }}
-            className="text-white text-lg"
-          >
-            {title}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  // ✅ Opsi 2 (Outline)
-  if (variant === "outline") {
-    return (
-      <View className="px-6 mt-8">
-        <TouchableOpacity
-          onPress={onPress}
-          activeOpacity={0.9}
-          className="border border-cimb-red py-4 rounded-3xl items-center"
-        >
-          <Text
-            style={{ fontFamily: "Poppins-SemiBold" }}
-            className="text-cimb-red text-lg"
-          >
-            {title}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  // ✅ Opsi 3 (Gradient Red)
-  return (
-    <View className="px-6 mt-8">
-      <TouchableOpacity
-        onPress={onPress}
-        activeOpacity={0.9}
-        className="rounded-3xl items-center overflow-hidden shadow-md"
-      >
-        <View
           style={{
             backgroundColor: "#C8102E",
-            width: "100%",
-            height: 56,
-            borderRadius: 100,
-            justifyContent: "center",
+            paddingVertical: 14,
+            borderRadius: 999,
             alignItems: "center",
+            justifyContent: "center",
+            shadowColor: "#000",
+            shadowOpacity: 0.25,
+            shadowRadius: 10,
+            elevation: 6,
           }}
         >
           <Text
-            style={{ fontFamily: "Poppins-SemiBold" }}
-            className="text-white text-lg"
+            style={{
+              fontFamily: "Poppins-SemiBold",
+              fontSize: 16,
+              color: "#FFFFFF",
+            }}
           >
             {title}
           </Text>
-        </View>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  // ⚪ Outline (rarely used, but keep)
+  return (
+    <View style={{ width: "100%" }}>
+      <TouchableOpacity
+        onPress={onPress}
+        activeOpacity={0.9}
+        style={{
+          borderWidth: 1.5,
+          borderColor: "#F9FAFB",
+          paddingVertical: 14,
+          borderRadius: 999,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: "Poppins-SemiBold",
+            fontSize: 16,
+            color: "#F9FAFB",
+          }}
+        >
+          {title}
+        </Text>
       </TouchableOpacity>
     </View>
   );

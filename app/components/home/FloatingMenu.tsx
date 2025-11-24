@@ -1,11 +1,17 @@
 import { Feather } from "@expo/vector-icons";
 import { MotiView } from "moti";
+import React from "react";
 import { Dimensions, Text, TouchableOpacity, View } from "react-native";
 
 const { height } = Dimensions.get("window");
 
+type Option = {
+  icon: React.ComponentProps<typeof Feather>["name"];
+  label: string;
+};
+
 export default function FloatingMenu({ onClose }: { onClose: () => void }) {
-  const options: { icon: React.ComponentProps<typeof Feather>["name"]; label: string }[] = [
+  const options: Option[] = [
     { icon: "arrow-up", label: "Transfer" },
     { icon: "credit-card", label: "Pay Bills" },
     { icon: "plus", label: "Add Subscription" },
@@ -14,47 +20,68 @@ export default function FloatingMenu({ onClose }: { onClose: () => void }) {
 
   return (
     <>
-      {/* 🔳 Overlay Background (buat gelap transparan pas muncul) */}
+      {/* Overlay */}
       <TouchableOpacity
         activeOpacity={1}
         onPress={onClose}
-        className="absolute top-0 left-0 right-0 bottom-0 bg-black/40"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: "rgba(0,0,0,0.4)",
+        }}
       />
 
-      {/* 🧩 Floating menu card */}
+      {/* Floating card */}
       <MotiView
         from={{ translateY: height, opacity: 0 }}
         animate={{ translateY: 0, opacity: 1 }}
         exit={{ translateY: height, opacity: 0 }}
         transition={{ type: "spring", damping: 20, stiffness: 150 }}
-        className="absolute bottom-32 left-0 right-0 px-6"
+        style={{ position: "absolute", left: 0, right: 0, bottom: 100, paddingHorizontal: 24 }}
       >
         <View
-          className="bg-[#1A1A1A]/95 rounded-3xl py-6 px-5"
           style={{
+            backgroundColor: "rgba(15,15,18,0.96)",
+            borderRadius: 24,
+            paddingVertical: 16,
+            paddingHorizontal: 16,
             shadowColor: "#C8102E",
             shadowOpacity: 0.3,
-            shadowRadius: 10,
-            elevation: 10,
+            shadowRadius: 12,
+            elevation: 12,
           }}
         >
           {options.map((opt, i) => (
             <TouchableOpacity
               key={i}
               activeOpacity={0.8}
-              className="flex-row items-center justify-between py-3 border-b border-white/10"
               onPress={onClose}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                paddingVertical: 10,
+                borderBottomWidth: i !== options.length - 1 ? 1 : 0,
+                borderBottomColor: "rgba(255,255,255,0.08)",
+              }}
             >
-              <View className="flex-row items-center space-x-3">
-                <Feather name={opt.icon} size={20} color="#FFF" />
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Feather name={opt.icon} size={20} color="#F9FAFB" />
                 <Text
-                  style={{ fontFamily: "Poppins-Medium" }}
-                  className="text-white text-base"
+                  style={{
+                    fontFamily: "Poppins-Medium",
+                    fontSize: 14,
+                    color: "#F9FAFB",
+                    marginLeft: 10,
+                  }}
                 >
                   {opt.label}
                 </Text>
               </View>
-              <Feather name="chevron-right" size={18} color="#fff" />
+              <Feather name="chevron-right" size={18} color="#E5E7EB" />
             </TouchableOpacity>
           ))}
         </View>

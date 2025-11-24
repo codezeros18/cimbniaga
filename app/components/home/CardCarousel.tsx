@@ -1,12 +1,13 @@
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
 import {
-    Dimensions,
-    Image,
-    ScrollView,
-    StyleSheet, // ✅ tambahkan ini
-    Text,
-    View,
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 
 const { width } = Dimensions.get("window");
@@ -28,7 +29,7 @@ const cards = [
 
 export default function CardCarousel() {
   return (
-    <View className="mt-8">
+    <View style={{ marginTop: 24 }}>
       <ScrollView
         horizontal
         pagingEnabled
@@ -40,73 +41,69 @@ export default function CardCarousel() {
             key={i}
             style={{
               width: width * 0.82,
-              borderRadius: 28,
+              borderRadius: 26,
               marginRight: 16,
-              shadowColor: "#C8102E",
-              shadowOpacity: 0.25,
-              shadowRadius: 12,
-              elevation: 8,
+              shadowColor: "#000",
+              shadowOpacity: 0.4,
+              shadowRadius: 14,
+              elevation: 10,
               overflow: "hidden",
-              position: "relative",
             }}
           >
-            {/* Base gradient background */}
+            {/* Dark premium gradient background */}
             <LinearGradient
-              colors={["#FFFFFF", "#FFF5F5", "#FFD7D7"]}
+              colors={["#050816", "#17121C", "#2A0F15"]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
               style={StyleSheet.absoluteFillObject}
             />
 
-            {/* Overlay radial soft reflection */}
+            {/* Subtle highlight overlay */}
             <LinearGradient
               colors={[
-                "rgba(255,255,255,0.5)",
-                "rgba(255,255,255,0.2)",
+                "rgba(255,255,255,0.15)",
                 "transparent",
-              ]}
-              start={{ x: 0.2, y: 0 }}
-              end={{ x: 0.8, y: 1 }}
-              style={[
-                StyleSheet.absoluteFillObject,
-                { borderRadius: 28 },
-              ]}
-            />
-
-            {/* Subtle dark vignette to soften edges */}
-            <LinearGradient
-              colors={[
-                "transparent",
-                "rgba(0,0,0,0.08)",
-                "rgba(0,0,0,0.12)",
+                "rgba(200,16,46,0.14)",
               ]}
               start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={[
-                StyleSheet.absoluteFillObject,
-                { borderRadius: 28 },
-              ]}
+              end={{ x: 1, y: 1 }}
+              style={[StyleSheet.absoluteFillObject, { borderRadius: 26 }]}
             />
 
-            {/* --- Card Content --- */}
+            {/* Card Content */}
             <View style={{ padding: 20 }}>
-              {/* Header */}
-              <View className="flex-row justify-between items-center mb-2">
+              {/* Top row: logo & balance */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
                 <Image
                   source={require("../../../assets/images/cimb-logo.webp")}
                   style={{ width: 100, height: 40 }}
                   resizeMode="contain"
                 />
                 <Text
-                  style={{ fontFamily: "Poppins-SemiBold" }}
-                  className="text-cimb-dark text-lg"
+                  style={{
+                    fontFamily: "Poppins-SemiBold",
+                    fontSize: 18,
+                    color: "#F9FAFB",
+                  }}
                 >
                   Rp {card.balance}
                 </Text>
               </View>
 
-              {/* Chip + Card number */}
-              <View className="flex-row justify-between mt-6">
+              {/* Chip + number row */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginTop: 28,
+                }}
+              >
                 <View>
                   <Image
                     source={require("../../../assets/images/card.png")}
@@ -114,23 +111,35 @@ export default function CardCarousel() {
                     resizeMode="contain"
                   />
                   <Text
-                    style={{ fontFamily: "Poppins-SemiBold" }}
-                    className="text-cimb-dark text-sm mt-2 tracking-widest"
+                    style={{
+                      fontFamily: "Poppins-SemiBold",
+                      fontSize: 13,
+                      color: "#E5E7EB",
+                      marginTop: 10,
+                      letterSpacing: 3,
+                    }}
                   >
                     {card.number}
                   </Text>
                 </View>
 
-                <View className="items-end">
+                <View style={{ alignItems: "flex-end" }}>
                   <Text
-                    style={{ fontFamily: "Poppins-Regular" }}
-                    className="text-gray-600 text-xs"
+                    style={{
+                      fontFamily: "Poppins-Regular",
+                      fontSize: 11,
+                      color: "#9CA3AF",
+                    }}
                   >
                     VALID THRU
                   </Text>
                   <Text
-                    style={{ fontFamily: "Poppins-SemiBold" }}
-                    className="text-cimb-dark text-sm mt-1"
+                    style={{
+                      fontFamily: "Poppins-SemiBold",
+                      fontSize: 13,
+                      color: "#F9FAFB",
+                      marginTop: 4,
+                    }}
                   >
                     {card.valid}
                   </Text>
@@ -138,24 +147,56 @@ export default function CardCarousel() {
               </View>
 
               {/* Footer */}
-              <View className="flex-row justify-between items-center mt-6">
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop: 22,
+                }}
+              >
                 <Text
-                  style={{ fontFamily: "Poppins-Regular" }}
-                  className="text-cimb-dark text-sm"
+                  style={{
+                    fontFamily: "Poppins-Regular",
+                    fontSize: 13,
+                    color: "#E5E7EB",
+                  }}
                 >
                   {card.name}
                 </Text>
-                <Feather name="credit-card" size={20} color="#C8102E" />
+                <Feather name="credit-card" size={20} color="#F97373" />
               </View>
             </View>
           </View>
         ))}
       </ScrollView>
 
-      {/* Pagination dots */}
-      <View className="flex-row justify-center mt-4">
-        <View className="w-8 h-2 bg-cimb-red rounded-full mx-1" />
-        <View className="w-3 h-2 bg-gray-400/60 rounded-full mx-1" />
+      {/* Pagination (static mock) */}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 10,
+        }}
+      >
+        <View
+          style={{
+            width: 18,
+            height: 4,
+            borderRadius: 999,
+            backgroundColor: "#C8102E",
+            marginHorizontal: 4,
+          }}
+        />
+        <View
+          style={{
+            width: 8,
+            height: 4,
+            borderRadius: 999,
+            backgroundColor: "rgba(249,250,251,0.4)",
+            marginHorizontal: 4,
+          }}
+        />
       </View>
     </View>
   );

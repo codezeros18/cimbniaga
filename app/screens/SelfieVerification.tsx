@@ -1,94 +1,102 @@
-import { useRouter } from "expo-router"
-import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native"
-import PrimaryButton from "../components/PrimaryButton"
-
-const { width } = Dimensions.get("window")
+import * as ImagePicker from "expo-image-picker";
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import {
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View
+} from "react-native";
+import PrimaryButton from "../components/PrimaryButton";
+import SelfieFrame from "../components/selfie/SelfieFrame";
 
 export default function SelfieVerification() {
-  const router = useRouter()
+  const router = useRouter();
+  const [selfieUri, setSelfieUri] = useState<string | null>(null);
 
-  // Dummy image untuk preview selfie (sementara)
-  const dummySelfieImage = require("../../assets/images/cimb.webp")
+  const takeSelfie = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      return Alert.alert("Camera Required", "Please allow camera access.");
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelfieUri(result.assets[0].uri);
+    }
+  };
+
+  const canContinue = !!selfieUri;
 
   return (
-    <View className="flex-1 bg-white justify-center items-center px-6">
-      {/* Preview Area - Canvas untuk selfie */}
-      <View 
-        className="rounded-2xl overflow-hidden mb-6 border-2 border-gray-200"
-        style={{
-          backgroundColor: "#F9F9F9",
-          height: 280,
-          width: width - 48,
-        }}
-      >
-        <View className="flex-1 justify-center items-center p-6">
-          {/* Circle canvas untuk selfie preview */}
-          <View
+    <LinearGradient
+      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      style={{ flex: 1 }}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            flexGrow: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            paddingHorizontal: 24,
+            paddingBottom: 40,
+          }}
+        >
+
+          {/* Title */}
+          <Text
             style={{
-              width: 220,
-              height: 220,
-              borderRadius: 110,
-              backgroundColor: "#FFFFFF",
-              borderWidth: 3,
-              borderColor: "#C8102E",
-              overflow: "hidden",
-              justifyContent: "center",
-              alignItems: "center",
+              fontFamily: "Poppins-Bold",
+              fontSize: 28,
+              color: "#FFFFFF",
+              marginBottom: 8,
+              textAlign: "center",
             }}
           >
-            <Image
-              source={dummySelfieImage}
-              style={{
-                width: 200,
-                height: 200,
-                borderRadius: 100,
-              }}
-              resizeMode="cover"
+            Selfie Verification
+          </Text>
+
+          <Text
+            style={{
+              fontFamily: "Poppins-Regular",
+              fontSize: 14,
+              color: "#D1D5DB",
+              marginBottom: 28,
+              textAlign: "center",
+            }}
+          >
+            Align your face within the frame
+          </Text>
+
+          {/* Selfie Frame */}
+          <SelfieFrame selfieUri={selfieUri} />
+
+          {/* Buttons */}
+          <View style={{ width: "100%", marginTop: 40, gap: 14 }}>
+            <PrimaryButton
+              title={selfieUri ? "Retake Selfie" : "Take a Selfie"}
+              variant="outline"
+              onPress={takeSelfie}
+            />
+            <PrimaryButton
+              title="Confirm & Continue"
+              variant="gradient"
+              onPress={() => router.push("/screens/InterviewScreen")}
+              disabled={!canContinue}
             />
           </View>
-          <Text 
-            style={{ fontFamily: "Poppins-Regular" }}
-            className="text-gray-400 text-xs mt-4"
-          >
-            Preview selfie (dummy image)
-          </Text>
-        </View>
-      </View>
 
-      {/* Tombol Ambil Selfie */}
-      <TouchableOpacity
-        activeOpacity={0.85}
-        style={{
-          backgroundColor: "#C8102E",
-          paddingVertical: 16,
-          borderRadius: 14,
-          alignItems: "center",
-          marginBottom: 12,
-          shadowColor: "#C8102E",
-          shadowOpacity: 0.18,
-          shadowRadius: 18,
-          elevation: 6,
-          width: "100%",
-        }}
-        // TODO: Akan menggunakan expo-image-picker atau camera nanti
-        onPress={() => {
-          // Placeholder untuk expo-image-picker/camera
-          console.log("Ambil Selfie - camera/image-picker akan diimplementasikan")
-        }}
-      >
-        <Text
-          style={{ fontFamily: "Poppins-SemiBold" }}
-          className="text-white text-base"
-        >
-          Ambil Selfie
-        </Text>
-      </TouchableOpacity>
-
-      {/* Tombol Lanjutkan */}
-      <PrimaryButton 
-        title="Lanjutkan" 
-        onPress={() => router.push("/screens/InterviewScreen")} 
-      />
-    </View>
-  )
+        </ScrollView>
+      </SafeAreaView>
+    </LinearGradient>
+  );
 }

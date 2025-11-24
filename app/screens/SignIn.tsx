@@ -1,152 +1,172 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
-import { Text, View } from "react-native";
+import React from "react";
+import {
+  SafeAreaView,
+  Text,
+  View,
+} from "react-native";
 import { Easing } from "react-native-reanimated";
+import PrimaryButton from "../components/PrimaryButton"; // ⬅️ Replace LoginButton import
 import BackgroundArt from "../components/signIn/BackgroundArt";
-import CimbFooter from "../components/signIn/CimbFooter";
 import CimbHeader from "../components/signIn/CimbHeader";
-import LoginButton from "../components/signIn/LoginButton";
 import QuickServices from "../components/signIn/QuickServices";
 
 export default function SignIn() {
   const router = useRouter();
 
   return (
-    <View className="flex-1 bg-white">
-      {/* 🖼️ Background Gradient */}
-      <View className="absolute top-0 left-0 right-0 h-[360px] z-0">
-        <LinearGradient
-          colors={["#C8102E", "#FFF5F5"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 1 }}
-          className="absolute top-0 left-0 right-0 h-full"
-        />
-      </View>
-
-      {/* 📱 Konten Utama */}
-      <View className="flex-1 justify-between">
-        {/* 🔺 Header animasi */}
-        <MotiView
-          from={{ translateY: -15, opacity: 0 }}
-          animate={{ translateY: 0, opacity: 1 }}
-          transition={{
-            type: "timing",
-            duration: 400,
-            easing: Easing.out(Easing.cubic),
+    <LinearGradient
+      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 1 }}
+      style={{ flex: 1 }}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
+        <View
+          style={{
+            flex: 1,
+            paddingHorizontal: 24,
+            paddingBottom: 20,
           }}
         >
-          <CimbHeader />
-        </MotiView>
-
-        {/* ✨ Background Illustration muncul pelan */}
-        <MotiView
-          from={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            type: "timing",
-            duration: 500,
-            delay: 150,
-            easing: Easing.out(Easing.cubic),
-          }}
-          className="-mt-16"
-        >
-          <BackgroundArt />
-        </MotiView>
-
-        {/* 💬 Tagline muncul cepat tapi halus */}
-        <MotiView
-          from={{ opacity: 0, translateY: 15 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{
-            type: "timing",
-            duration: 400,
-            delay: 250,
-            easing: Easing.out(Easing.cubic),
-          }}
-          className="px-8 mt-[220px]"
-        >
-          <Text
-            style={{ fontFamily: "Poppins-Medium" }}
-            className="text-4xl text-cimb-dark leading-snug"
+          {/* HEADER */}
+          <MotiView
+            from={{ opacity: 0, translateY: -10 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{
+              type: "timing",
+              duration: 400,
+              easing: Easing.out(Easing.cubic),
+            }}
           >
-            Finances made{"\n"}
-            <Text className="text-cimb-red font-semibold">simpler</Text> and{" "}
-            <Text className="text-cimb-red font-semibold">smarter!</Text>
-          </Text>
-        </MotiView>
+            <CimbHeader />
+          </MotiView>
 
-        {/* ⚡ Quick Services muncul bertahap cepat */}
-        <MotiView
-          from={{ opacity: 0, translateY: 15 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{
-            type: "spring",
-            damping: 14,
-            stiffness: 180,
-            delay: 350,
-          }}
-        >
-          <QuickServices />
-        </MotiView>
-
-        {/* 🔘 Login Button muncul cepat */}
-        <MotiView
-          from={{ opacity: 0, translateY: 10 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{
-            type: "timing",
-            duration: 350,
-            delay: 450,
-            easing: Easing.out(Easing.cubic),
-          }}
-        >
-          <LoginButton
-            variant="solid"
-            onPress={() => router.push("/screens/HomeScreen")}
-          />
-        </MotiView>
-
-        {/* 🧾 Text di bawah login */}
-        <MotiView
-          from={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            type: "timing",
-            duration: 400,
-            delay: 550,
-            easing: Easing.out(Easing.cubic),
-          }}
-          className="mt-6 px-6 items-center"
-        >
-          <Text
-            style={{ fontFamily: "Poppins-Medium" }}
-            className="text-gray-600 text-sm text-center"
+          {/* CARD / BACKGROUND ART */}
+          <MotiView
+            from={{ opacity: 0, scale: 0.96, translateY: 10 }}
+            animate={{ opacity: 1, scale: 1, translateY: 0 }}
+            transition={{
+              type: "timing",
+              duration: 450,
+              delay: 120,
+              easing: Easing.out(Easing.cubic),
+            }}
+            style={{ marginTop: 48, marginBottom: 48 , alignItems: "center" }}
           >
-            Want to login with a different account?
-          </Text>
-          <Text
-            style={{ fontFamily: "Poppins-SemiBold" }}
-            className="text-cimb-red text-base text-center mt-1"
-          >
-            Change Account
-          </Text>
-        </MotiView>
+            <BackgroundArt />
+          </MotiView>
 
-        {/* 🏦 Footer */}
-        <MotiView
-          from={{ opacity: 0, translateY: 15 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{
-            type: "timing",
-            duration: 400,
-            delay: 700,
-            easing: Easing.out(Easing.cubic),
-          }}
-        >
-          <CimbFooter />
-        </MotiView>
-      </View>
-    </View>
+          {/* TAGLINE */}
+          <MotiView
+            from={{ opacity: 0, translateY: 15 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{
+              type: "timing",
+              duration: 400,
+              delay: 220,
+              easing: Easing.out(Easing.cubic),
+            }}
+            style={{ marginTop: 24 }}
+          >
+            <Text
+              style={{
+                fontFamily: "Poppins-Medium",
+                fontSize: 26,
+                color: "#F9FAFB",
+                lineHeight: 32,
+              }}
+            >
+              Banking made{" "}
+              <Text
+                style={{
+                  fontFamily: "Poppins-SemiBold",
+                  color: "#F97373",
+                }}
+              >
+                simple
+              </Text>{" "}
+              and{" "}
+              <Text
+                style={{
+                  fontFamily: "Poppins-SemiBold",
+                  color: "#F97373",
+                }}
+              >
+                smarter.
+              </Text>
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Poppins-Regular",
+                fontSize: 13,
+                color: "#D1D5DB",
+                marginTop: 6,
+              }}
+            >
+              Log in to manage your accounts, cards, and daily transactions.
+            </Text>
+          </MotiView>
+
+          {/* QUICK SERVICES */}
+          <MotiView
+            from={{ opacity: 0, translateY: 12 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{
+              type: "spring",
+              damping: 16,
+              stiffness: 160,
+              delay: 320,
+            }}
+            style={{ marginTop: 24 }}
+          >
+            <QuickServices />
+          </MotiView>
+
+          {/* LOGIN BUTTON replaced with PRIMARY BUTTON */}
+          <MotiView
+            from={{ opacity: 0, translateY: 10 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{
+              type: "timing",
+              duration: 350,
+              delay: 420,
+              easing: Easing.out(Easing.cubic),
+            }}
+            style={{ marginTop: 30 }}
+          >
+            <PrimaryButton
+              title="Login to CIMB"
+              onPress={() => router.push("/screens/LoginForm")}
+            />
+
+            <Text
+              style={{
+                fontFamily: "Poppins-Medium",
+                fontSize: 13,
+                color: "#9CA3AF",
+                textAlign: "center",
+                marginTop: 12,
+              }}
+            >
+              Want to login with a different account?
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Poppins-SemiBold",
+                fontSize: 14,
+                color: "#F97373",
+                textAlign: "center",
+                marginTop: 2,
+              }}
+            >
+              Change account
+            </Text>
+          </MotiView>
+        </View>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }

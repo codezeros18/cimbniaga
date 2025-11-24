@@ -1,27 +1,53 @@
+import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
-export default function QuickServices() {
-  const services = [
-    { name: "Flazz", icon: require("../../../assets/images/flazz.png") },
-    { name: "QRIS", icon: require("../../../assets/images/qr.png") },
-    { name: "Transfer", icon: require("../../../assets/images/qris.png") },
-    { name: "Cardless", icon: require("../../../assets/images/card.png") },
-  ];
+const services = [
+  { name: "Flazz", icon: require("../../../assets/images/flazz.png") },
+  { name: "QRIS", icon: require("../../../assets/images/qr.png") },
+  { name: "Transfer", icon: require("../../../assets/images/qris.png") },
+  { name: "Cardless", icon: require("../../../assets/images/card.png") },
+];
 
+export default function QuickServices() {
   return (
-    <View className="flex-row justify-between px-8 mt-10">
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+      }}
+    >
       {services.map((s, i) => (
-        <TouchableOpacity key={i} className="items-center">
-          <View className="bg-[#FFF5F5] p-3 rounded-2xl shadow-sm">
+        <TouchableOpacity
+          key={i}
+          activeOpacity={0.85}
+          style={{ alignItems: "center" }}
+        >
+          <View
+            style={{
+              backgroundColor: "rgba(255,255,255,0.06)",
+              padding: 10,
+              borderRadius: 18,
+              borderWidth: 1,
+              borderColor: "rgba(255,255,255,0.16)",
+              shadowColor: "#000",
+              shadowOpacity: 0.18,
+              shadowRadius: 10,
+              elevation: 5,
+            }}
+          >
             <Image
               source={s.icon}
-              className="w-10 h-10"
+              style={{ width: 32, height: 32 }}
               resizeMode="contain"
             />
           </View>
           <Text
-            style={{ fontFamily: "Poppins-Medium" }}
-            className="text-xs text-gray-700 mt-2"
+            style={{
+              fontFamily: "Poppins-Medium",
+              fontSize: 11,
+              color: "#E5E7EB",
+              marginTop: 6,
+            }}
           >
             {s.name}
           </Text>

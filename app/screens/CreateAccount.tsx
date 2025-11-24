@@ -1,72 +1,70 @@
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 import { MotiView } from "moti";
-import { ScrollView } from "react-native";
-import CTASection from "../components/createAccount/CTASection";
-import FeatureCard from "../components/createAccount/FeatureCard";
-import FooterSmall from "../components/createAccount/FooterSmall";
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import HeaderTop from "../components/createAccount/HeaderTop";
 import HeroSection from "../components/createAccount/HeroSection";
 import Illustration from "../components/createAccount/Illustration";
+import PrimaryButton from "../components/PrimaryButton"; // 🔥 new!
 
 export default function CreateAccount() {
+  const router = useRouter();
+
   return (
-    <ScrollView
-      className="flex-1 bg-white"
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: 60 }}
+    <LinearGradient
+      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      style={{ flex: 1 }}
     >
-      {/* 🔺 Header */}
-      <MotiView
-        from={{ opacity: 0, translateY: -10 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ type: "timing", duration: 500 }}
-      >
-        <HeaderTop />
-      </MotiView>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View
+          style={{
+            flex: 1,
+            paddingHorizontal: 24,
+            paddingBottom: 36,
+            justifyContent: "space-between",
+          }}
+        >
+          {/* Header */}
+          <HeaderTop />
 
-      {/* 🟥 Hero Section */}
-      <MotiView
-        from={{ opacity: 0, translateY: 20 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ type: "timing", duration: 600, delay: 200 }}
-      >
-        <HeroSection />
-      </MotiView>
+          {/* Hero */}
+          <View style={{ alignItems: "center", marginTop: 16 }}>
+            <HeroSection />
+            <MotiView
+              from={{ opacity: 0, scale: 0.88 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 250 }}
+              style={{ marginTop: 18 }}
+            >
+              <Illustration />
+            </MotiView>
+          </View>
 
-      {/* 💡 Feature Card */}
-      <MotiView
-        from={{ opacity: 0, translateY: 20 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ type: "spring", damping: 18, stiffness: 120, delay: 400 }}
-      >
-        <FeatureCard />
-      </MotiView>
+          {/* CTA Buttons */}
+          <View style={{ gap: 14 }}>
+            <PrimaryButton
+              title="Open a New Account"
+              onPress={() => router.push("/screens/PersonalForm")}
+            />
 
-      {/* 🖼️ Illustration */}
-      <MotiView
-        from={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ type: "timing", duration: 700, delay: 600 }}
-      >
-        <Illustration />
-      </MotiView>
-
-      {/* 🚀 CTA Section */}
-      <MotiView
-        from={{ opacity: 0, translateY: 20 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{ type: "spring", delay: 800 }}
-      >
-        <CTASection />
-      </MotiView>
-
-      {/* 🧾 Footer */}
-      <MotiView
-        from={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ type: "timing", delay: 1000 }}
-      >
-        <FooterSmall />
-      </MotiView>
-    </ScrollView>
+            <TouchableOpacity
+              activeOpacity={0.85}
+              onPress={() => router.push("/screens/SignIn")}
+            >
+              <Text
+                style={{
+                  fontFamily: "Poppins-Medium",
+                  fontSize: 15,
+                  textAlign: "center",
+                  color: "#FFFFFFCC",
+                }}
+              >
+                Already have an account? Sign In
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }

@@ -2,49 +2,37 @@ import { Image, Text, View } from "react-native";
 
 export default function FeatureCard() {
   return (
-    <View
-      style={{
-        marginTop: -30,
-        marginHorizontal: 24,
-        backgroundColor: "#fff",
-        borderRadius: 20,
-        shadowColor: "#000",
-        shadowOpacity: 0.08,
-        shadowRadius: 10,
-        elevation: 5,
-        padding: 18,
-      }}
-    >
-      <View className="flex-row items-center justify-between">
+    <View style={{
+      marginHorizontal: 24,
+      backgroundColor: "#FFFFFF",
+      borderRadius: 18,
+      padding: 20,
+      shadowColor: "#000",
+      shadowOpacity: 0.06,
+      shadowRadius: 10,
+      elevation: 4,
+      marginTop: -24,
+    }}>
+      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <View style={{ flex: 1 }}>
-          <Text
-            style={{ fontFamily: "Poppins-Medium" }}
-            className="text-gray-800 text-lg"
-          >
+          <Text style={{ fontFamily: "Poppins-SemiBold", fontSize: 17, color: "#111827" }}>
             Fast Onboarding
           </Text>
-          <Text
-            style={{ fontFamily: "Poppins-Regular" }}
-            className="text-gray-500 text-sm mt-1"
-          >
-            Verify with NIK & selfie — no paperwork required.
+          <Text style={{ fontFamily: "Poppins-Regular", fontSize: 13, color: "#6B7280", marginTop: 4 }}>
+            Verify using NIK & Selfie. No paperwork.
           </Text>
         </View>
 
-        <View className="ml-3 items-center">
-          <View
-            style={{
-              backgroundColor: "rgba(200,18,30,0.06)",
-              padding: 12,
-              borderRadius: 12,
-            }}
-          >
-            <Image
-              source={require("../../../assets/images/illustration-onboarding.webp")}
-              style={{ width: 64, height: 64 }}
-              resizeMode="contain"
-            />
-          </View>
+        <View style={{
+          padding: 10,
+          borderRadius: 14,
+          backgroundColor: "#FDE3E6"
+        }}>
+          <Image
+            source={require("../../../assets/images/illustration-onboarding.webp")}
+            style={{ width: 56, height: 56 }}
+            resizeMode="contain"
+          />
         </View>
       </View>
     </View>

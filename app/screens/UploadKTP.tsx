@@ -1,4 +1,4 @@
-import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -6,79 +6,78 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
-  TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import KTPPicker from "../components/KTPPicker";
+import PrimaryButton from "../components/PrimaryButton";
 
 export default function UploadKTP() {
   const router = useRouter();
   const [ktpImageUri, setKtpImageUri] = useState<string | null>(null);
 
   const handleNext = () => {
-    console.log("Image URI:", ktpImageUri);
-    // router.push("/screens/SelfieVerification"); 
+    if (!ktpImageUri) return;
+    router.push("/screens/SelfieVerification");
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <ScrollView 
-        contentContainerClassName="flex-grow justify-center p-6" 
-        showsVerticalScrollIndicator={false}
-      >
-        
-        {/* TITLE */}
-        <Text
-          className="text-2xl font-poppins-bold text-gray-800 mb-4 text-center"
-          style={{ fontFamily: "Poppins-Bold", fontSize: 24 }}
+    <LinearGradient
+      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      style={{ flex: 1 }}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            paddingHorizontal: 26,
+            paddingBottom: 50,
+          }}
+          showsVerticalScrollIndicator={false}
         >
-          Upload Your KTP
-        </Text>
+          {/* Title */}
+          <Text
+            style={{
+              fontFamily: "Poppins-Bold",
+              fontSize: 26,
+              color: "#F9FAFB",
+              marginBottom: 10,
+              textAlign: "center",
+            }}
+          >
+            Upload Your KTP
+          </Text>
 
-        {/* SUBTITLE */}
-        <Text
-          className="text-base font-poppins text-gray-600 text-center mb-8"
-          style={{ fontFamily: "Poppins-Regular", fontSize: 16 }}
-        >
-          Please provide a clear photo of your KTP (ID Card).
-        </Text>
+          <Text
+            style={{
+              fontFamily: "Poppins-Regular",
+              fontSize: 14,
+              color: "#D1D5DB",
+              marginBottom: 28,
+              textAlign: "center",
+            }}
+          >
+            Please provide a clear and valid photo of your ID card.
+          </Text>
 
-        <View className="items-center mb-8">
           <Image
-            source={require('../../assets/images/ktppp.png')} 
-            className="w-80 h-60"
+            source={require("../../assets/images/ktppp.png")}
+            style={{ width: 210, height: 150, marginBottom: 32 }}
             resizeMode="contain"
           />
-        </View>
-        
-        <KTPPicker 
-          imageUri={ktpImageUri} 
-          setImageUri={setKtpImageUri} 
-        />
 
-        <View className="w-full pt-10">
-          <TouchableOpacity
-            onPress={handleNext}
-            disabled={!ktpImageUri}
-            className="w-full rounded-2xl overflow-hidden"
-          >
-            <LinearGradient
-              colors={ktpImageUri ? ['#C8102E', '#9E0B22'] : ['#E57373', '#CF8E8E']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              className="py-4 items-center justify-center"
-            >
-              <Text
-                className="text-white text-lg font-poppins-bold"
-                style={{ fontFamily: "Poppins-Bold", fontSize: 18 }}
-              >
-                Next
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
+          <KTPPicker imageUri={ktpImageUri} setImageUri={setKtpImageUri} />
 
-      </ScrollView> 
-    </SafeAreaView>
+          <View style={{ width: "100%", marginTop: 34 }}>
+            <PrimaryButton
+              title="Continue"
+              onPress={handleNext}
+              disabled={!ktpImageUri}
+            />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }

@@ -1,4 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
 import { ScrollView, View } from "react-native";
 import AccountSummary from "../components/home/AccountSummary";
 import CardCarousel from "../components/home/CardCarousel";
@@ -9,22 +10,22 @@ import UserGreeting from "../components/home/UserGreeting";
 export default function HomeScreen() {
   return (
     <LinearGradient
-      colors={["#2A0000", "#C8102E"]}
+      colors={["#130B0B", "#3A0A0A", "#050505"]}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
-      className="flex-1"
+      style={{ flex: 1 }}
     >
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: 80,
-          paddingTop: 40,
+          paddingTop: 60,
         }}
       >
         {/* Header */}
         <HomeHeader />
 
-        {/* Greeting */}
+        {/* Greeting + Search */}
         <UserGreeting />
 
         {/* Account Summary */}
@@ -37,7 +38,7 @@ export default function HomeScreen() {
         <SubscriptionSection />
 
         {/* Spacer */}
-        <View className="h-10" />
+        <View style={{ height: 40 }} />
       </ScrollView>
     </LinearGradient>
   );

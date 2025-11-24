@@ -1,3 +1,4 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 
@@ -5,49 +6,57 @@ export default function CTASection() {
   const router = useRouter();
 
   return (
-    <View className="px-6 mt-6 space-y-8">
+    <View style={{ gap: 14, marginBottom: 28 }}>
+      
+      {/* PRIMARY CTA */}
       <TouchableOpacity
-        activeOpacity={0.85}
+        activeOpacity={0.88}
         onPress={() => router.push("/screens/PersonalForm")}
-        style={{
-          backgroundColor: "#C8102E",
-          paddingVertical: 16,
-          borderRadius: 14,
-          alignItems: "center",
-          shadowColor: "#C8102E",
-          shadowOpacity: 0.18,
-          shadowRadius: 18,
-          elevation: 6,
-        }}
-        className="mb-3"
+        style={{ borderRadius: 50, overflow: "hidden" }}
       >
-        <Text
-          style={{ fontFamily: "Poppins-SemiBold" }}
-          className="text-white text-lg"
+        <LinearGradient
+          colors={["#C8102E", "#9E0B22"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{
+            paddingVertical: 16,
+            alignItems: "center",
+            shadowColor: "#C8102E",
+            shadowOpacity: 0.3,
+            shadowRadius: 16,
+            elevation: 10,
+          }}
         >
-          Open a New Account
-        </Text>
+          <Text
+            style={{
+              fontFamily: "Poppins-SemiBold",
+              fontSize: 18,
+              color: "#FFF",
+            }}
+          >
+            Open a New Account
+          </Text>
+        </LinearGradient>
       </TouchableOpacity>
 
+      {/* SECONDARY CTA */}
       <TouchableOpacity
         activeOpacity={0.85}
         onPress={() => router.push("/screens/SignIn")}
-        style={{
-          borderWidth: 1,
-          borderColor: "#C8102E",
-          paddingVertical: 14,
-          borderRadius: 14,
-          alignItems: "center",
-          backgroundColor: "#fff",
-        }}
+        style={{ paddingVertical: 10 }}
       >
         <Text
-          style={{ fontFamily: "Poppins-Medium" }}
-          className="text-cimb-red text-base"
+          style={{
+            fontFamily: "Poppins-Medium",
+            fontSize: 15,
+            textAlign: "center",
+            color: "#FFFFFFCC",
+          }}
         >
           Already have an account? Sign In
         </Text>
       </TouchableOpacity>
+
     </View>
   );
 }

@@ -1,15 +1,17 @@
 import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import InputField from "../components/InputField";
+import PrimaryButton from "../components/PrimaryButton";
 
 export default function PersonalForm() {
   const router = useRouter();
@@ -25,114 +27,149 @@ export default function PersonalForm() {
   const canSubmit = allFilled && checked && passwordsMatch;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent: "center",
-          paddingHorizontal: 24,
-          paddingVertical: 40,
-        }}
-        showsVerticalScrollIndicator={false}
+    <LinearGradient
+      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      style={{ flex: 1 }}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={{ flex: 1 }}
       >
-        
-        <Text style={{ fontSize: 32, fontFamily: "Poppins-Bold", color: "black", marginBottom: 4 }}>
-          Create an account
-        </Text>
-
-        <Text style={{ fontSize: 18, fontFamily: "Poppins-Medium", color: "#6B7280", marginBottom: 32 }}>
-          Enter your email, phone number & password to sign up.
-        </Text>
-
-        <Text style={{ fontSize: 18, fontFamily: "Poppins-Medium", color: "#4B5563", marginBottom: 4, marginLeft: 8 }}>
-          Email
-        </Text>
-        <InputField
-          placeholder="name@gmail.com"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
-
-        <Text style={{ fontSize: 18, fontFamily: "Poppins-Medium", color: "#4B5563", marginBottom: 4, marginLeft: 8 }}>
-          Phone number
-        </Text>
-        <InputField
-          placeholder="+1 000 000 000"
-          value={phone}
-          onChangeText={setPhone}
-          keyboardType="phone-pad"
-        />
-
-        <Text style={{ fontSize: 18, fontFamily: "Poppins-Medium", color: "#4B5563", marginBottom: 4, marginLeft: 8 }}>
-          Password
-        </Text>
-        <InputField
-          placeholder="New password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-
-        <Text style={{ fontSize: 18, fontFamily: "Poppins-Medium", color: "#4B5563", marginBottom: 4, marginLeft: 8 }}>
-          Confirm password
-        </Text>
-        <InputField
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry
-        />
-
-        <TouchableOpacity
-          onPress={() => setChecked(!checked)}
-          className="flex-row items-center my-4"
-          activeOpacity={0.8}
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingHorizontal: 24,
+            paddingVertical: 80,
+          }}
+          showsVerticalScrollIndicator={false}
         >
-          <View
-            className={`w-5 h-5 rounded border mr-3 items-center justify-center ${
-              checked ? "bg-[#C8102E] border-[#C8102E]" : "border-gray-400"
-            }`}
+          {/* Title */}
+          <Text
+            style={{
+              fontFamily: "Poppins-Bold",
+              fontSize: 28,
+              color: "#F9FAFB",
+              marginBottom: 6,
+              textAlign: "center",
+            }}
           >
-            {checked && (
-              <Ionicons name="checkmark" size={20} color="white" />
-            )}
+            Create an Account
+          </Text>
+
+          <Text
+            style={{
+              fontFamily: "Poppins-Regular",
+              fontSize: 14,
+              color: "#D1D5DB",
+              marginBottom: 32,
+              textAlign: "center",
+            }}
+          >
+            Enter your details to get started
+          </Text>
+
+          {/* Form */}
+          <InputField
+            label="Email"
+            placeholder="name@gmail.com"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+
+          <InputField
+            label="Phone number"
+            placeholder="+62 812 3456 7890"
+            value={phone}
+            onChangeText={setPhone}
+            keyboardType="phone-pad"
+          />
+
+          <InputField
+            label="Password"
+            placeholder="••••••••"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+
+          <InputField
+            label="Confirm password"
+            placeholder="••••••••"
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+          />
+
+          {/* Checkbox */}
+          <TouchableOpacity
+            onPress={() => setChecked(!checked)}
+            activeOpacity={0.7}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 18,
+            }}
+          >
+            <View
+              style={{
+                width: 20,
+                height: 20,
+                borderRadius: 6,
+                borderWidth: 2,
+                borderColor: checked ? "#C8102E" : "#6B7280",
+                backgroundColor: checked ? "#C8102E" : "transparent",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {checked && <Ionicons name="checkmark" size={12} color="#fff" />}
+            </View>
+            <Text
+              style={{
+                fontFamily: "Poppins-Medium",
+                marginLeft: 10,
+                fontSize: 13,
+                color: "#E5E7EB",
+                flex: 1,
+              }}
+            >
+              I agree to CIMB Niaga Terms & Policy.
+            </Text>
+          </TouchableOpacity>
+
+          {/* Submit Button */}
+          <View style={{ marginTop: 30 }}>
+            <PrimaryButton
+              title="Sign Up"
+              disabled={!canSubmit}
+              onPress={() => router.push("/screens/OTPVerification")}
+            />
           </View>
 
-          <Text style={{ fontFamily: "Poppins-Medium", fontSize: 16, color: "#4B5563", flex: 1 }}>
-            I agree to Vaulton Terms & Policy.
+          {/* Footer */}
+          <Text
+            style={{
+              fontFamily: "Poppins-Regular",
+              marginTop: 25,
+              textAlign: "center",
+              color: "#D1D5DB",
+              fontSize: 13,
+            }}
+          >
+            Already have an account?{" "}
+            <Text
+              style={{
+                color: "#F97373",
+                fontFamily: "Poppins-SemiBold",
+              }}
+              onPress={() => router.push("/screens/SignIn")}
+            >
+              Sign in
+            </Text>
           </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[
-            styles.buttonBase,
-            { backgroundColor: canSubmit ? "#C8102E" : "#E57373" },
-          ]}
-          onPress={() => router.push("/screens/OTPVerification")}
-          disabled={!canSubmit}
-          activeOpacity={0.8}
-        >
-          <Text style={{ color: "white", fontSize: 20, fontFamily: "Poppins-Bold" }}>
-            Sign up
-          </Text>
-        </TouchableOpacity>
-
-        <Text style={{ textAlign: "center", fontFamily: "Poppins-Medium", color: "#6B7280", fontSize: 14, marginTop: 24 }}>
-          No account yet?{" "}
-          <Text style={{ color: "#C8102E", fontFamily: "Poppins-Bold" }}>Sign in</Text>
-        </Text>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
 }
-
-const styles = StyleSheet.create({
-  buttonBase: {
-    paddingVertical: 16,
-    borderRadius: 16,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-  }
-});

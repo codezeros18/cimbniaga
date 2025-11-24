@@ -1,137 +1,193 @@
-import { useRouter } from "expo-router"
-import { useState } from "react"
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import PrimaryButton from "../components/PrimaryButton"
+import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import PrimaryButton from "../components/PrimaryButton";
 
-type AccountOption = {
-  id: string
-  title: string
-  description: string
-}
-
-const accountOptions: AccountOption[] = [
+const accountOptions = [
   {
     id: "octo_savers",
     title: "OCTO Savers",
-    description: "Tabungan bebas biaya admin untuk transaksi harian yang simple.",
+    description: "No admin fees. Best for daily transactions.",
   },
   {
     id: "xtra_dana",
     title: "Xtra Dana",
-    description: "Cocok buat dana darurat dengan bunga kompetitif dan setoran fleksibel.",
+    description: "Flexible savings with competitive interest rate.",
   },
   {
     id: "xtra_premier",
     title: "Xtra Premier",
-    description: "Nikmati limit transaksi tinggi dan prioritas layanan eksklusif CIMB.",
+    description: "Higher limits and priority premium banking services.",
   },
-]
+];
 
 export default function AccountTypeSelection() {
-  const router = useRouter()
-  const [accountTypeId, setAccountType] = useState<string | null>(null)
+  const router = useRouter();
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const handleNext = () => {
-    if (!accountTypeId) return
-    const selectedOption = accountOptions.find((option) => option.id === accountTypeId)
+    const selected = accountOptions.find((o) => o.id === selectedId);
+    if (!selected) return;
     router.push({
       pathname: "/screens/ReviewAndSign",
       params: {
-        accountTypeId,
-        accountTypeName: selectedOption?.title ?? "",
+        accountTypeId: selectedId,
+        accountTypeName: selected.title,
       },
-    })
-  }
+    });
+  };
 
   return (
-    <ScrollView className="flex-1 bg-white" contentContainerStyle={{ paddingBottom: 40 }}>
-      <View className="px-6 pt-10">
-        <View className="flex-row items-center justify-between">
-          <Image
-            source={require("../../assets/images/cimb-logo.webp")}
-            style={{ width: 110, height: 28 }}
-            resizeMode="contain"
-          />
-          <View className="rounded-full px-3 py-1 border border-gray-200">
-            <Text className="text-xs text-gray-500">Step 4 of 6</Text>
+    <LinearGradient
+      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      style={{ flex: 1 }}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            padding: 24,
+            paddingBottom: 90,
+          }}
+        >
+
+          {/* Heading */}
+          <Text
+            style={{
+              fontFamily: "Poppins-Bold",
+              fontSize: 26,
+              color: "#FFFFFF",
+              marginBottom: 8,
+            }}
+          >
+            Select Account Type
+          </Text>
+
+          <Text
+            style={{
+              fontFamily: "Poppins-Regular",
+              fontSize: 14,
+              color: "#D1D5DB",
+              marginBottom: 26,
+            }}
+          >
+            Choose based on your needs — can be updated before signing.
+          </Text>
+
+          {/* Tip box */}
+          <View
+            style={{
+              backgroundColor: "rgba(255,255,255,0.05)",
+              padding: 16,
+              borderRadius: 18,
+              borderWidth: 1,
+              borderColor: "rgba(200,16,46,0.4)",
+              marginBottom: 28,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Poppins-SemiBold",
+                fontSize: 14,
+                color: "#FFB3B3",
+                marginBottom: 3,
+              }}
+            >
+              💡 Quick Tip
+            </Text>
+            <Text
+              style={{
+                fontFamily: "Poppins-Regular",
+                fontSize: 12,
+                color: "#CCCCCC",
+              }}
+            >
+              You can update your choice before digital signature.
+            </Text>
           </View>
-        </View>
 
-        <View className="mt-6">
-          <Text className="text-sm font-semibold text-cimb-red">PRA-TANDA TANGAN</Text>
-          <Text className="text-3xl font-semibold text-gray-900 mt-2 leading-tight">
-            Pilih rekening sesuai tujuanmu.
-          </Text>
-          <Text className="text-base text-gray-500 mt-2">
-            Rekomendasi di bawah membantu kamu melanjutkan proses tanpa repot.
-          </Text>
-        </View>
-      </View>
-
-      <View className="px-6 mt-6">
-        <View className="bg-cimb-red rounded-3xl px-5 py-4 shadow-lg shadow-red-200">
-          <Text className="text-white font-semibold text-lg">Tips</Text>
-          <Text className="text-white/80 text-sm mt-1">
-            Kamu masih bisa mengganti jenis rekening sebelum tanda tangan digital, jadi pilih
-            sementara aja dulu.
-          </Text>
-        </View>
-      </View>
-
-      <View className="px-6 mt-6">
-        <View className="bg-white rounded-3xl shadow-xl shadow-gray-200 p-5">
-          <Text className="text-base font-semibold text-gray-900 mb-4">Rekomendasi CIMB</Text>
-          {accountOptions.map((option, index) => {
-            const isSelected = option.id === accountTypeId
-            const isLast = index === accountOptions.length - 1
-
+          {/* Options */}
+          {accountOptions.map((item) => {
+            const active = selectedId === item.id;
             return (
               <TouchableOpacity
-                key={option.id}
+                key={item.id}
                 activeOpacity={0.9}
-                onPress={() => setAccountType(option.id)}
-                className={`flex-row items-start py-4 ${isLast ? "" : "border-b border-gray-100"}`}
+                onPress={() => setSelectedId(item.id)}
+                style={{
+                  padding: 18,
+                  borderRadius: 22,
+                  marginBottom: 16,
+                  backgroundColor: "rgba(255,255,255,0.04)",
+                  borderWidth: active ? 2 : 1,
+                  borderColor: active ? "#C8102E" : "rgba(255,255,255,0.12)",
+                  shadowColor: active ? "#C8102E" : "#000",
+                  shadowOpacity: active ? 0.3 : 0.05,
+                  shadowRadius: active ? 12 : 4,
+                  elevation: active ? 10 : 2,
+                }}
               >
-                <View
-                  className={`w-10 h-10 rounded-2xl mr-4 items-center justify-center ${
-                    isSelected ? "bg-cimb-red/10" : "bg-gray-100"
-                  }`}
-                >
-                  <Text className="text-xs font-semibold text-gray-600">
-                    {(index + 1).toString().padStart(2, "0")}
-                  </Text>
-                </View>
-                <View className="flex-1 pr-3">
-                  <Text
-                    className={`text-lg font-semibold ${
-                      isSelected ? "text-cimb-red" : "text-gray-900"
-                    }`}
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        fontFamily: "Poppins-SemiBold",
+                        fontSize: 16,
+                        color: "#FFFFFF",
+                      }}
+                    >
+                      {item.title}
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: "Poppins-Regular",
+                        fontSize: 12,
+                        color: "#B5B5B5",
+                        marginTop: 4,
+                      }}
+                    >
+                      {item.description}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      width: 26,
+                      height: 26,
+                      borderRadius: 13,
+                      backgroundColor: active ? "#C8102E" : "transparent",
+                      borderWidth: 2,
+                      borderColor: active ? "#C8102E" : "#6B7280",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    {option.title}
-                  </Text>
-                  <Text className="text-sm text-gray-500 mt-1">{option.description}</Text>
+                    {active && (
+                      <Feather name="check" size={14} color="#FFF" />
+                    )}
+                  </View>
                 </View>
-                <View
-                  className={`w-5 h-5 mt-1 rounded-full border-2 ${
-                    isSelected ? "bg-cimb-red border-cimb-red" : "border-gray-300"
-                  }`}
-                />
               </TouchableOpacity>
-            )
+            );
           })}
-        </View>
-      </View>
 
-      <View className="px-6 mt-8">
-        <PrimaryButton title="Next" onPress={handleNext} />
-        <Text className="text-xs text-gray-400 text-center mt-2">
-          Pastikan pilihan sesuai sebelum lanjut ke Review & Sign.
-        </Text>
-      </View>
-
-      <View className="items-center mt-10">
-        <Text className="text-gray-300 text-xs">© 2025 CIMB Niaga Digital Banking</Text>
-      </View>
-    </ScrollView>
-  )
+          {/* Button */}
+          <PrimaryButton
+            title="Continue"
+            disabled={!selectedId}
+            onPress={handleNext}
+            style={{ marginTop: 40 }}
+          />
+        </ScrollView>
+      </SafeAreaView>
+    </LinearGradient>
+  );
 }

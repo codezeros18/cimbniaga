@@ -1,72 +1,51 @@
-import React, { useEffect, useRef } from 'react';
-import {
-    NativeSyntheticEvent,
-    TextInput,
-    TextInputKeyPressEventData,
-    View
-} from 'react-native';
+import React, { useRef } from "react";
+import { Keyboard, TextInput, View } from "react-native";
 
-interface OTPInputProps {
-  code: string[];
-  setCode: React.Dispatch<React.SetStateAction<string[]>>;
-  numberOfDigits?: number;
-}
+export default function OTPInput({ code, setCode, numberOfDigits }: any) {
+  const refs = useRef<(TextInput | null)[]>([]);
 
-const OTPInput: React.FC<OTPInputProps> = ({ code, setCode, numberOfDigits = 4 }) => {
-  const textInputRefs = useRef<Array<TextInput | null>>(Array(numberOfDigits).fill(null));
+  const updateDigit = (text: string, i: number) => {
+    const updated = [...code];
+    updated[i] = text.slice(-1);
+    setCode(updated);
 
-  useEffect(() => {
-    if (!code || code.length !== numberOfDigits) {
-      setCode(Array(numberOfDigits).fill(''));
+    if (text && i < numberOfDigits - 1) {
+      refs.current[i + 1]?.focus();
     }
-  }, [numberOfDigits, setCode]);
-
-  const handleTextChange = (text: string, index: number) => {
-    if (text.length > 1) {
-      const newCode = Array(numberOfDigits).fill('');
-      for (let i = 0; i < Math.min(text.length, numberOfDigits); i++) {
-        newCode[i] = text[i];
-      }
-      setCode(newCode);
-
-      const nextIndex = Math.min(text.length, numberOfDigits - 1);
-      textInputRefs.current[nextIndex]?.focus();
-      return;
-    }
-
-    const newCode = [...code];
-    newCode[index] = text;
-    setCode(newCode);
-
-    if (text !== '' && index < numberOfDigits - 1) {
-      textInputRefs.current[index + 1]?.focus();
-    }
+    if (updated.every((v) => v !== "")) Keyboard.dismiss();
   };
 
-  const handleKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>, index: number) => {
-    const key = e.nativeEvent.key;
-    if (key === 'Backspace' && code[index] === '' && index > 0) {
-      textInputRefs.current[index - 1]?.focus();
+  const backspaceHandler = (key: string, i: number) => {
+    if (key === "Backspace" && code[i] === "" && i > 0) {
+      refs.current[i - 1]?.focus();
     }
   };
 
   return (
-    <View className="flex-row justify-around w-4/5 self-center mb-10">
-      {code.map((digit, index) => (
+    <View style={{ flexDirection: "row", gap: 14 }}>
+      {code.map((digit: string, i: number) => (
         <TextInput
-          key={index}
-          ref={(ref) => { textInputRefs.current[index] = ref; }}
-          className="w-12 h-14 border border-gray-300 rounded-xl text-center text-2xl font-poppins-bold text-gray-800 bg-gray-100"
-          keyboardType="numeric"
+          key={i}
+          ref={(r: TextInput | null) => { refs.current[i] = r; }}
+          style={{
+            width: 62,
+            height: 68,
+            borderRadius: 14,
+            textAlign: "center",
+            fontSize: 22,
+            fontFamily: "Poppins-SemiBold",
+            color: "#FFFFFF",
+            backgroundColor: "rgba(255,255,255,0.05)",
+            borderWidth: 2,
+            borderColor: digit ? "#C8102E" : "rgba(255,255,255,0.12)",
+          }}
+          keyboardType="number-pad"
           maxLength={1}
-          onChangeText={(text) => handleTextChange(text, index)}
-          onKeyPress={(e) => handleKeyPress(e, index)}
           value={digit}
-          // Kursor sekarang akan terlihat karena caretHidden tidak ada
+          onChangeText={(t) => updateDigit(t, i)}
+          onKeyPress={(e) => backspaceHandler(e.nativeEvent.key, i)}
         />
       ))}
     </View>
   );
-};
-
-export default OTPInput;
+}

@@ -2,29 +2,30 @@ import { Text, View } from "react-native";
 
 export default function HeroSection() {
   return (
-    <View className="px-6 mt-4">
-      <View
+    <View style={{ alignItems: "center" }}>
+      <Text
         style={{
-          backgroundColor: "#C8102E",
-          borderRadius: 28,
-          paddingVertical: 28,
-          paddingHorizontal: 22,
+          fontFamily: "Poppins-SemiBold",
+          fontSize: 30,
+          color: "#FFFFFF",
+          textAlign: "center",
+          lineHeight: 38,
         }}
       >
-        <Text
-          style={{ fontFamily: "Poppins-SemiBold" }}
-          className="text-white text-2xl"
-        >
-          Welcome to CIMB Digital
-        </Text>
-        <Text
-          style={{ fontFamily: "Poppins-Regular" }}
-          className="text-white/90 text-sm mt-2 leading-5"
-        >
-          Open your digital savings account in just a few minutes. Fast,
-          secure, and paperless.
-        </Text>
-      </View>
+        Welcome to CIMB Digital
+      </Text>
+
+      <Text
+        style={{
+          fontFamily: "Poppins-Regular",
+          fontSize: 15,
+          color: "#D1D5DB",
+          textAlign: "center",
+          marginTop: 10,
+        }}
+      >
+        Open your account in minutes. Secure, fast, and paperless.
+      </Text>
     </View>
   );
 }

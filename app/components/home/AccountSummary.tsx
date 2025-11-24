@@ -1,98 +1,142 @@
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-export default function AccountSummaryDark() {
+export default function AccountSummary() {
   return (
-    <View className="px-6 mt-6">
+    <View style={{ paddingHorizontal: 24, marginTop: 18 }}>
       <LinearGradient
-        colors={["#1A1A1A", "#3A0A0A"]}
+        colors={["#0B0B0D", "#1E0F12"]}
         start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
+        end={{ x: 1, y: 1 }}
         style={{
           borderRadius: 24,
-          padding: 24,
+          padding: 20,
           shadowColor: "#000",
-          shadowOpacity: 0.3,
-          shadowRadius: 10,
-          elevation: 6,
-          position: "relative", // biar absolute icon tetap di dalam card
+          shadowOpacity: 0.35,
+          shadowRadius: 16,
+          elevation: 8,
+          position: "relative",
         }}
       >
-        {/* ⚙️ Setting Icon (absolute) */}
+        {/* Settings Icon */}
         <TouchableOpacity
-          className="absolute top-4 right-4 70 p-2 rounded-full"
           activeOpacity={0.8}
+          style={{
+            position: "absolute",
+            top: 14,
+            right: 14,
+            padding: 6,
+            borderRadius: 999,
+            backgroundColor: "rgba(255,255,255,0.06)",
+          }}
         >
-          <Feather name="settings" size={18} color="#fff" />
+          <Feather name="settings" size={18} color="#F9FAFB" />
         </TouchableOpacity>
 
-        {/* 🧍‍♂️ Centered Name */}
-        <View className="items-center mt-2">
+        {/* Name */}
+        <View style={{ alignItems: "center", marginTop: 4 }}>
           <Text
-            style={{ fontFamily: "Poppins-Medium" }}
-            className="text-gray-400 text-sm"
+            style={{
+              fontFamily: "Poppins-Medium",
+              fontSize: 12,
+              color: "#9CA3AF",
+            }}
           >
             Mr.
           </Text>
           <Text
-            style={{ fontFamily: "Poppins-SemiBold" }}
-            className="text-white text-2xl mt-1"
+            style={{
+              fontFamily: "Poppins-SemiBold",
+              fontSize: 20,
+              color: "#F9FAFB",
+              marginTop: 4,
+              textAlign: "center",
+            }}
           >
             Lintang Balakosa Ardhana
           </Text>
         </View>
 
         {/* Divider */}
-        <View className="h-[1px] bg-white/10 my-5" />
+        <View
+          style={{
+            height: 1,
+            backgroundColor: "rgba(249,250,251,0.12)",
+            marginVertical: 16,
+          }}
+        />
 
-        {/* Balance & Bonuses */}
-        <View className="flex-row justify-between">
-          {/* Left - Balance */}
-          <View className="flex-1 items-start">
+        {/* Balance & Bonus */}
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          {/* Balance */}
+          <View style={{ flex: 1 }}>
             <Text
-              style={{ fontFamily: "Poppins-Medium" }}
-              className="text-gray-300 opacity-50 text-sm"
+              style={{
+                fontFamily: "Poppins-Medium",
+                fontSize: 11,
+                color: "#9CA3AF",
+                letterSpacing: 1,
+              }}
             >
               BALANCE
             </Text>
-            <View className="flex-row items-center mt-2">
+            <View style={{ flexDirection: "row", alignItems: "center", marginTop: 6 }}>
               <Text
-                style={{ fontFamily: "Poppins-SemiBold" }}
-                className="text-white text-xl pr-2"
+                style={{
+                  fontFamily: "Poppins-SemiBold",
+                  fontSize: 18,
+                  color: "#F9FAFB",
+                  marginRight: 6,
+                }}
               >
                 Rp 24.092.890
               </Text>
-              <Feather
-                className="bg-cimb-red rounded-full p-1"
-                name="arrow-right"
-                size={14}
-                color="#FFFFFF"
-              />
+              <View
+                style={{
+                  backgroundColor: "#C8102E",
+                  borderRadius: 999,
+                  padding: 4,
+                }}
+              >
+                <Feather name="arrow-right" size={14} color="#FFFFFF" />
+              </View>
             </View>
           </View>
 
-          {/* Right - Bonuses */}
-          <View className="flex-1 items-end">
+          {/* Bonuses */}
+          <View style={{ flex: 1, alignItems: "flex-end" }}>
             <Text
-              style={{ fontFamily: "Poppins-Medium" }}
-              className="text-gray-300 opacity-50 text-sm"
+              style={{
+                fontFamily: "Poppins-Medium",
+                fontSize: 11,
+                color: "#9CA3AF",
+                letterSpacing: 1,
+              }}
             >
               BONUSES
             </Text>
-            <View className="flex-row items-center mt-2">
+            <View style={{ flexDirection: "row", alignItems: "center", marginTop: 6 }}>
               <Text
-                style={{ fontFamily: "Poppins-SemiBold" }}
-                className="text-white text-xl pr-2"
+                style={{
+                  fontFamily: "Poppins-SemiBold",
+                  fontSize: 18,
+                  color: "#F9FAFB",
+                  marginRight: 6,
+                }}
               >
                 Rp 12.550
               </Text>
-              <Feather
-                className="bg-cimb-red rounded-full p-1"
-                name="arrow-right"
-                size={14}
-                color="#FFFFFF"
-              />
+              <View
+                style={{
+                  backgroundColor: "#C8102E",
+                  borderRadius: 999,
+                  padding: 4,
+                }}
+              >
+                <Feather name="arrow-right" size={14} color="#FFFFFF" />
+              </View>
             </View>
           </View>
         </View>

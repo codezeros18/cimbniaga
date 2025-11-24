@@ -1,59 +1,46 @@
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
-
-interface PrimaryButtonProps {
-  title: string;
-  onPress?: () => void;
-  disabled?: boolean;
-}
+import { Text, TouchableOpacity } from "react-native";
 
 export default function PrimaryButton({
   title,
   onPress,
-  disabled = false,
-}: PrimaryButtonProps) {
+  disabled,
+}: any) {
   return (
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled}
-      activeOpacity={0.8}
-      style={[
-        styles.button,
-        disabled ? styles.buttonDisabled : styles.buttonEnabled,
-      ]}
+      activeOpacity={disabled ? 1 : 0.9}
+      style={{
+        width: "100%",
+        marginTop: 20,
+        borderRadius: 50,
+        overflow: "hidden",
+      }}
     >
-      <Text
-        style={[styles.text, disabled ? styles.textDisabled : styles.textActive]}
+      <LinearGradient
+        colors={
+          disabled
+            ? ["#D6D6D6", "#C4C4C4"]
+            : ["#C8102E", "#9E0B22"]
+        }
+        style={{
+          height: 52,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        {title}
-      </Text>
+        <Text
+          style={{
+            color: disabled ? "#7A7A7A" : "#FFFFFF",
+            fontSize: 17,
+            fontFamily: "Poppins-SemiBold",
+          }}
+        >
+          {title}
+        </Text>
+      </LinearGradient>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    width: "100%",
-    paddingVertical: 14,
-    borderRadius: 16,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-  },
-  buttonEnabled: {
-    backgroundColor: "#C8102E", // CIMB red
-  },
-  buttonDisabled: {
-    backgroundColor: "#E5E7EB", // gray when disabled
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  textActive: {
-    color: "#FFFFFF",
-  },
-  textDisabled: {
-    color: "#9CA3AF",
-  },
-});

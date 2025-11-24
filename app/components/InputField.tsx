@@ -1,54 +1,80 @@
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
-import { TextInput, View } from "react-native";
+import React, { useState } from "react";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 
-interface InputFieldProps {
-  placeholder?: string;
-  value: string;
-  onChangeText: (text: string) => void;
-  keyboardType?: "default" | "numeric" | "email-address" | "phone-pad";
-  secureTextEntry?: boolean;
-}
-
-const InputField: React.FC<InputFieldProps> = ({
+export default function InputField({
+  label,
   placeholder,
   value,
   onChangeText,
   keyboardType = "default",
   secureTextEntry = false,
-}) => {
-  const [isFocused, setIsFocused] = React.useState(false);
+}: any) {
+  const [focused, setFocused] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   return (
-    <View className="mb-4 w-full">
+    <View style={{ width: "100%", marginBottom: 22 }}>
+      {label && (
+        <Text
+          style={{
+            fontFamily: "Poppins-Medium",
+            fontSize: 14,
+            marginBottom: 6,
+            color: "#F9FAFB",
+          }}
+        >
+          {label}
+        </Text>
+      )}
+
       <View
-        className={`flex-row items-center border rounded-2xl px-4 py-3 bg-white ${
-          isFocused ? "border-[#C8102E]" : "border-gray-300"
-        }`}
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingHorizontal: 14,
+          paddingVertical: 13,
+          backgroundColor: "rgba(255,255,255,0.07)",
+          borderRadius: 14,
+          borderWidth: 2,
+          borderColor: focused ? "#C8102E" : "rgba(255,255,255,0.12)",
+        }}
       >
         <TextInput
           style={{
             flex: 1,
-            color: "#1F2937",
-            fontSize: 18, // 🔥 diperbesar jadi ukuran 18
-            fontFamily: "Poppins-Medium", // 🔥 ganti font
+            fontSize: 15,
+            fontFamily: "Poppins-Regular",
+            color: "#FFFFFF",
           }}
           placeholder={placeholder}
-          placeholderTextColor="#B0B0B0"
+          placeholderTextColor="rgba(255,255,255,0.4)"
           value={value}
           onChangeText={onChangeText}
-          keyboardType={keyboardType}
-          secureTextEntry={secureTextEntry}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          secureTextEntry={secureTextEntry && !visible}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+
+          // 🚫 Disable Password Autofill Everywhere
+          textContentType="none"
+          autoComplete="off"
+          importantForAutofill="no"
+          autoCorrect={false}
+          autoCapitalize="none"
         />
 
-        {value.length > 0 && (
+        {secureTextEntry ? (
+          <TouchableOpacity onPress={() => setVisible(!visible)}>
+            <Ionicons
+              name={visible ? "eye-off" : "eye"}
+              size={20}
+              color="#9CA3AF"
+            />
+          </TouchableOpacity>
+        ) : value.length > 0 ? (
           <Ionicons name="checkmark-circle" size={22} color="#C8102E" />
-        )}
+        ) : null}
       </View>
     </View>
   );
-};
-
-export default InputField;
+}
