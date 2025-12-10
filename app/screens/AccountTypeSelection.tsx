@@ -15,17 +15,17 @@ const accountOptions = [
   {
     id: "octo_savers",
     title: "OCTO Savers",
-    description: "No admin fees. Best for daily transactions.",
+    description: "Daily transactions with zero admin fees.",
   },
   {
     id: "xtra_dana",
     title: "Xtra Dana",
-    description: "Flexible savings with competitive interest rate.",
+    description: "Flexible savings with competitive interest.",
   },
   {
     id: "xtra_premier",
     title: "Xtra Premier",
-    description: "Higher limits and priority premium banking services.",
+    description: "Higher limits & priority premium services.",
   },
 ];
 
@@ -47,7 +47,7 @@ export default function AccountTypeSelection() {
 
   return (
     <LinearGradient
-      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      colors={["#140B0B", "#3A0A0A", "#000000"]}
       style={{ flex: 1 }}
     >
       <SafeAreaView style={{ flex: 1 }}>
@@ -55,84 +55,104 @@ export default function AccountTypeSelection() {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             padding: 24,
-            paddingBottom: 90,
+            paddingBottom: 100,
+            justifyContent: "center",
+            flexGrow: 1,
           }}
         >
-
+          {/* STEP INDICATOR */}
+                    <View style={{ alignItems: "center", marginBottom: 20 }}>
+                      <Text
+                        style={{
+                          fontFamily: "Poppins-Medium",
+                          fontSize: 13,
+                          color: "#D1D5DB",
+                        }}
+                      >
+                        Step <Text style={{ color: "#C8102E" }}>6</Text> of 7
+                      </Text>
+                    </View>
           {/* Heading */}
-          <Text
-            style={{
-              fontFamily: "Poppins-Bold",
-              fontSize: 26,
-              color: "#FFFFFF",
-              marginBottom: 8,
-            }}
-          >
-            Select Account Type
-          </Text>
+          <View style={{ marginBottom: 32 }}>
+            <Text
+              style={{
+                fontFamily: "Poppins-Bold",
+                fontSize: 28,
+                color: "#FFFFFF",
+                textAlign: "center",
+                marginBottom: 6,
+              }}
+            >
+              Choose Your Account
+            </Text>
 
-          <Text
-            style={{
-              fontFamily: "Poppins-Regular",
-              fontSize: 14,
-              color: "#D1D5DB",
-              marginBottom: 26,
-            }}
-          >
-            Choose based on your needs — can be updated before signing.
-          </Text>
+            <Text
+              style={{
+                fontFamily: "Poppins-Regular",
+                fontSize: 14,
+                color: "#CFCFCF",
+                textAlign: "center",
+              }}
+            >
+              Select the best fit for your financial needs.
+            </Text>
+          </View>
 
-          {/* Tip box */}
+          {/* Tip Box */}
           <View
             style={{
-              backgroundColor: "rgba(255,255,255,0.05)",
-              padding: 16,
+              backgroundColor: "rgba(255,255,255,0.06)",
+              padding: 18,
               borderRadius: 18,
-              borderWidth: 1,
-              borderColor: "rgba(200,16,46,0.4)",
-              marginBottom: 28,
+              borderWidth: 1.2,
+              borderColor: "rgba(200,16,46,0.45)",
+              marginBottom: 32,
             }}
           >
             <Text
               style={{
                 fontFamily: "Poppins-SemiBold",
                 fontSize: 14,
-                color: "#FFB3B3",
-                marginBottom: 3,
+                color: "#FFB1B1",
+                marginBottom: 2,
               }}
             >
-              💡 Quick Tip
+              💡 Tip
             </Text>
+
             <Text
               style={{
                 fontFamily: "Poppins-Regular",
                 fontSize: 12,
-                color: "#CCCCCC",
+                color: "#D4D4D4",
+                lineHeight: 18,
               }}
             >
-              You can update your choice before digital signature.
+              You can still change your selection before signing the agreement.
             </Text>
           </View>
 
-          {/* Options */}
+          {/* Option Cards */}
           {accountOptions.map((item) => {
             const active = selectedId === item.id;
             return (
               <TouchableOpacity
                 key={item.id}
-                activeOpacity={0.9}
+                activeOpacity={0.88}
                 onPress={() => setSelectedId(item.id)}
                 style={{
-                  padding: 18,
-                  borderRadius: 22,
-                  marginBottom: 16,
-                  backgroundColor: "rgba(255,255,255,0.04)",
+                  padding: 20,
+                  borderRadius: 24,
+                  marginBottom: 18,
+                  backgroundColor: "rgba(255,255,255,0.05)",
                   borderWidth: active ? 2 : 1,
-                  borderColor: active ? "#C8102E" : "rgba(255,255,255,0.12)",
+                  borderColor: active
+                    ? "rgba(200,16,46,0.9)"
+                    : "rgba(255,255,255,0.12)",
                   shadowColor: active ? "#C8102E" : "#000",
-                  shadowOpacity: active ? 0.3 : 0.05,
-                  shadowRadius: active ? 12 : 4,
-                  elevation: active ? 10 : 2,
+                  shadowOpacity: active ? 0.32 : 0.08,
+                  shadowRadius: active ? 14 : 4,
+                  elevation: active ? 10 : 1,
                 }}
               >
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -140,7 +160,7 @@ export default function AccountTypeSelection() {
                     <Text
                       style={{
                         fontFamily: "Poppins-SemiBold",
-                        fontSize: 16,
+                        fontSize: 17,
                         color: "#FFFFFF",
                       }}
                     >
@@ -149,8 +169,8 @@ export default function AccountTypeSelection() {
                     <Text
                       style={{
                         fontFamily: "Poppins-Regular",
-                        fontSize: 12,
-                        color: "#B5B5B5",
+                        fontSize: 13,
+                        color: "#BEBEBE",
                         marginTop: 4,
                       }}
                     >
@@ -160,32 +180,42 @@ export default function AccountTypeSelection() {
 
                   <View
                     style={{
-                      width: 26,
-                      height: 26,
-                      borderRadius: 13,
+                      width: 27,
+                      height: 27,
+                      borderRadius: 14,
                       backgroundColor: active ? "#C8102E" : "transparent",
                       borderWidth: 2,
-                      borderColor: active ? "#C8102E" : "#6B7280",
+                      borderColor: active ? "#C8102E" : "#6B6B6B",
                       alignItems: "center",
                       justifyContent: "center",
                     }}
                   >
-                    {active && (
-                      <Feather name="check" size={14} color="#FFF" />
-                    )}
+                    {active && <Feather name="check" size={14} color="#FFF" />}
                   </View>
                 </View>
               </TouchableOpacity>
             );
           })}
 
-          {/* Button */}
+          {/* CTA Button */}
           <PrimaryButton
             title="Continue"
             disabled={!selectedId}
             onPress={handleNext}
             style={{ marginTop: 40 }}
           />
+          {/* FOOTER */}
+                <Text
+                  style={{
+                    fontFamily: "Poppins-Light",
+                    fontSize: 10,
+                    color: "#FFFFFF55",
+                    marginTop: 28,
+                    textAlign: "center",
+                  }}
+                >
+                  © 2025 CIMB Niaga Digital Banking
+                </Text>
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>

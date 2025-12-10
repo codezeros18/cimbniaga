@@ -8,9 +8,9 @@ import {
   View,
 } from "react-native";
 import { Easing } from "react-native-reanimated";
+import CimbHeader from "../components/createAccount/HeaderTop";
 import PrimaryButton from "../components/PrimaryButton"; // ⬅️ Replace LoginButton import
 import BackgroundArt from "../components/signIn/BackgroundArt";
-import CimbHeader from "../components/signIn/CimbHeader";
 import QuickServices from "../components/signIn/QuickServices";
 
 export default function SignIn() {

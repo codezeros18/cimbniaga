@@ -7,8 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
-  TouchableOpacity,
-  View,
+  TouchableOpacity
 } from "react-native";
 import OTPInput from "../components/OTPField";
 import PrimaryButton from "../components/PrimaryButton";
@@ -16,12 +15,19 @@ import PrimaryButton from "../components/PrimaryButton";
 export default function OTPVerification() {
   const router = useRouter();
   const [otpCode, setOtpCode] = useState(["", "", "", ""]);
+  const [timer, setTimer] = useState(45); // resend timer
 
   const isOtpComplete = otpCode.every((d) => d !== "");
 
   useEffect(() => {
     if (isOtpComplete) Keyboard.dismiss();
   }, [isOtpComplete]);
+
+  useEffect(() => {
+    if (timer === 0) return;
+    const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
+    return () => clearInterval(interval);
+  }, [timer]);
 
   const handleVerify = () => {
     if (!isOtpComplete) return;
@@ -30,7 +36,7 @@ export default function OTPVerification() {
 
   return (
     <LinearGradient
-      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      colors={["#120606", "#3A0A0A", "#000000"]}
       style={{ flex: 1 }}
     >
       <SafeAreaView style={{ flex: 1 }}>
@@ -40,75 +46,109 @@ export default function OTPVerification() {
             justifyContent: "center",
             alignItems: "center",
             paddingHorizontal: 26,
+            paddingTop: 80,
+            paddingBottom: 40,
           }}
           showsVerticalScrollIndicator={false}
         >
+          {/* Step */}
+          <Text
+            style={{
+              fontFamily: "Poppins-Medium",
+              fontSize: 13,
+              color: "#D1D5DB",
+              marginBottom: 20,
+            }}
+          >
+            Step <Text style={{ color: "#C8102E" }}>2</Text> of 7
+          </Text>
+
           {/* Title */}
           <Text
             style={{
               fontFamily: "Poppins-Bold",
-              fontSize: 26,
-              color: "#F9FAFB",
-              marginBottom: 12,
+              fontSize: 28,
+              color: "#FFFFFF",
               textAlign: "center",
+              marginBottom: 8,
             }}
           >
-            Verify Phone
+            Verify Phone Number
           </Text>
 
-          <Image
-            source={require("../../assets/images/otp.png")}
-            resizeMode="contain"
-            style={{ width: 200, height: 160, marginBottom: 22 }}
-          />
-
+          {/* Subtitle */}
           <Text
             style={{
               fontFamily: "Poppins-Regular",
               fontSize: 14,
-              color: "#D1D5DB",
               textAlign: "center",
-              marginBottom: 4,
+              color: "#C9C9C9",
+              marginBottom: 24,
+              maxWidth: 300,
             }}
           >
-            Enter the 4-digit code sent to:
+            Enter the 4-digit code sent to your mobile number
           </Text>
 
+          {/* Illustration */}
+          <Image
+            source={require("../../assets/images/otp.png")}
+            resizeMode="contain"
+            style={{ width: 180, height: 150, marginBottom: 22 }}
+          />
+
+          {/* Masked Number */}
           <Text
             style={{
               fontFamily: "Poppins-SemiBold",
               fontSize: 16,
               color: "#FFFFFF",
-              marginBottom: 26,
+              marginBottom: 30,
             }}
           >
             ****** 9122
           </Text>
 
-          {/* OTP input */}
+          {/* OTP INPUT */}
           <OTPInput code={otpCode} setCode={setOtpCode} numberOfDigits={4} />
 
-          {/* Resend */}
-          <TouchableOpacity activeOpacity={0.8} style={{ marginTop: 12 }}>
+          {/* Resend Timer */}
+          {timer > 0 ? (
             <Text
               style={{
-                fontFamily: "Poppins-SemiBold",
-                fontSize: 14,
-                color: "#F97373",
+                marginTop: 16,
+                fontFamily: "Poppins-Regular",
+                color: "#A6A6A6",
               }}
             >
-              Resend Code
+              Resend code in{" "}
+              <Text style={{ color: "#FFFFFF" }}>{timer}s</Text>
             </Text>
-          </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => setTimer(45)}
+              style={{ marginTop: 14 }}
+            >
+              <Text
+                style={{
+                  fontFamily: "Poppins-SemiBold",
+                  color: "#FF6E6E",
+                  fontSize: 14,
+                }}
+              >
+                Resend Code
+              </Text>
+            </TouchableOpacity>
+          )}
 
-          {/* Continue */}
-          <View style={{ width: "100%", marginTop: 34 }}>
-            <PrimaryButton
-              title="Verify"
-              disabled={!isOtpComplete}
-              onPress={handleVerify}
-            />
-          </View>
+          {/* Verify Button */}
+          <PrimaryButton
+            title="Verify"
+            disabled={!isOtpComplete}
+            onPress={handleVerify}
+            style={{ marginTop: 40 }}
+          />
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>

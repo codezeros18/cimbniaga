@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -16,15 +16,52 @@ import PrimaryButton from "../components/PrimaryButton";
 export default function PersonalForm() {
   const router = useRouter();
 
+  /** FORM STATES */
   const [email, setEmail] = useState("");
+  const [suggestion, setSuggestion] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [checked, setChecked] = useState(false);
+  const [confirm, setConfirm] = useState("");
+  const [agree, setAgree] = useState(false);
 
-  const allFilled = email && phone && password && confirmPassword;
-  const passwordsMatch = password === confirmPassword;
-  const canSubmit = allFilled && checked && passwordsMatch;
+  /** EMAIL DOMAIN CORRECTION */
+  const checkEmailSuggestion = (val: string) => {
+    setEmail(val);
+
+    const wrong = ["gmal", "gnail", "gmaik", "gmial", "gmil"];
+    if (wrong.some(w => val.includes(w))) {
+      setSuggestion(val.replace(/g[a-z]+\.com/, "gmail.com"));
+    } else {
+      setSuggestion("");
+    }
+  };
+
+  /** PHONE FORMATTER (+62) */
+  const formatPhone = (val: string) => {
+    let cleaned = val.replace(/\D+/g, ""); // only numbers
+    if (!cleaned.startsWith("62")) cleaned = "62" + cleaned;
+    setPhone("+" + cleaned);
+  };
+
+  /** PASSWORD STRENGTH */
+  const strength = useMemo(() => {
+    if (password.length < 6) return "Weak";
+    if (password.match(/[A-Z]/) && password.match(/[0-9]/) && password.length >= 8)
+      return "Strong";
+    return "Medium";
+  }, [password]);
+
+  const strengthColor =
+    strength === "Weak" ? "#EF4444" :
+    strength === "Medium" ? "#F59E0B" : "#16A34A";
+
+  const canSubmit =
+    email &&
+    phone &&
+    password &&
+    confirm &&
+    password === confirm &&
+    agree;
 
   return (
     <LinearGradient
@@ -36,24 +73,37 @@ export default function PersonalForm() {
         style={{ flex: 1 }}
       >
         <ScrollView
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             flexGrow: 1,
-            paddingHorizontal: 24,
+            paddingHorizontal: 26,
             paddingVertical: 80,
           }}
-          showsVerticalScrollIndicator={false}
         >
-          {/* Title */}
+          {/* STEP INDICATOR */}
+          <View style={{ alignItems: "center", marginBottom: 20 }}>
+            <Text
+              style={{
+                fontFamily: "Poppins-Medium",
+                fontSize: 13,
+                color: "#D1D5DB",
+              }}
+            >
+              Step <Text style={{ color: "#C8102E" }}>1</Text> of 7
+            </Text>
+          </View>
+
+          {/* HEADER */}
           <Text
             style={{
               fontFamily: "Poppins-Bold",
-              fontSize: 28,
-              color: "#F9FAFB",
-              marginBottom: 6,
+              fontSize: 30,
+              color: "#FFFFFF",
               textAlign: "center",
+              marginBottom: 10,
             }}
           >
-            Create an Account
+            Create Your Profile
           </Text>
 
           <Text
@@ -61,113 +111,137 @@ export default function PersonalForm() {
               fontFamily: "Poppins-Regular",
               fontSize: 14,
               color: "#D1D5DB",
-              marginBottom: 32,
               textAlign: "center",
+              marginBottom: 34,
+              lineHeight: 20,
             }}
           >
-            Enter your details to get started
+            Start your digital banking journey in just a few steps
           </Text>
 
-          {/* Form */}
+          {/* FORM */}
           <InputField
             label="Email"
-            placeholder="name@gmail.com"
+            placeholder="you@example.com"
             value={email}
-            onChangeText={setEmail}
+            onChangeText={checkEmailSuggestion}
             keyboardType="email-address"
+            textContentType="emailAddress"
+            autoComplete="email"
           />
 
+          {suggestion !== "" && (
+            <TouchableOpacity onPress={() => setEmail(suggestion)}>
+              <Text
+                style={{
+                  fontFamily: "Poppins-Regular",
+                  fontSize: 12,
+                  color: "#94A3B8",
+                  marginBottom: 10,
+                }}
+              >
+                Did you mean <Text style={{ color: "#F87171" }}>{suggestion}</Text> ?
+              </Text>
+            </TouchableOpacity>
+          )}
+
           <InputField
-            label="Phone number"
-            placeholder="+62 812 3456 7890"
+            label="Phone Number"
+            placeholder="+62812xxxxxxx"
             value={phone}
-            onChangeText={setPhone}
+            onChangeText={formatPhone}
             keyboardType="phone-pad"
+            textContentType="telephoneNumber"
+            autoComplete="tel"
           />
 
           <InputField
             label="Password"
-            placeholder="••••••••"
+            placeholder="Min. 8 characters"
             secureTextEntry
             value={password}
             onChangeText={setPassword}
+            textContentType="password"
+            autoComplete="password"
           />
 
-          <InputField
-            label="Confirm password"
-            placeholder="••••••••"
-            secureTextEntry
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-          />
-
-          {/* Checkbox */}
-          <TouchableOpacity
-            onPress={() => setChecked(!checked)}
-            activeOpacity={0.7}
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginTop: 18,
-            }}
-          >
-            <View
-              style={{
-                width: 20,
-                height: 20,
-                borderRadius: 6,
-                borderWidth: 2,
-                borderColor: checked ? "#C8102E" : "#6B7280",
-                backgroundColor: checked ? "#C8102E" : "transparent",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {checked && <Ionicons name="checkmark" size={12} color="#fff" />}
-            </View>
+          {password.length > 0 && (
             <Text
               style={{
                 fontFamily: "Poppins-Medium",
+                fontSize: 12,
+                color: strengthColor,
+                marginTop: 4,
+                marginBottom: 10,
+              }}
+            >
+              Password Strength: {strength}
+            </Text>
+          )}
+
+          <InputField
+            label="Confirm Password"
+            placeholder="Re-enter your password"
+            secureTextEntry
+            value={confirm}
+            onChangeText={setConfirm}
+            textContentType="password"
+            autoComplete="password-new"
+          />
+
+          {confirm.length > 0 && confirm !== password && (
+            <Text
+              style={{
+                fontFamily: "Poppins-Regular",
+                fontSize: 12,
+                color: "#EF4444",
+                marginBottom: 8,
+              }}
+            >
+              Passwords do not match
+            </Text>
+          )}
+
+          {/* AGREEMENT */}
+          <TouchableOpacity
+            onPress={() => setAgree(!agree)}
+            style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}
+          >
+            <View
+              style={{
+                width: 24,
+                height: 24,
+                borderRadius: 6,
+                borderWidth: 2,
+                borderColor: agree ? "#C8102E" : "#6B7280",
+                backgroundColor: agree ? "#C8102E" : "transparent",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {agree && <Ionicons name="checkmark" size={14} color="#fff" />}
+            </View>
+
+            <Text
+              style={{
+                fontFamily: "Poppins-Regular",
                 marginLeft: 10,
                 fontSize: 13,
+                lineHeight: 18,
                 color: "#E5E7EB",
                 flex: 1,
               }}
             >
-              I agree to CIMB Niaga Terms & Policy.
+              I agree to CIMB Niaga Terms & Conditions
             </Text>
           </TouchableOpacity>
 
-          {/* Submit Button */}
-          <View style={{ marginTop: 30 }}>
-            <PrimaryButton
-              title="Sign Up"
-              disabled={!canSubmit}
-              onPress={() => router.push("/screens/OTPVerification")}
-            />
-          </View>
-
-          {/* Footer */}
-          <Text
-            style={{
-              fontFamily: "Poppins-Regular",
-              marginTop: 25,
-              textAlign: "center",
-              color: "#D1D5DB",
-              fontSize: 13,
-            }}
-          >
-            Already have an account?{" "}
-            <Text
-              style={{
-                color: "#F97373",
-                fontFamily: "Poppins-SemiBold",
-              }}
-              onPress={() => router.push("/screens/SignIn")}
-            >
-              Sign in
-            </Text>
-          </Text>
+          <PrimaryButton
+            title="Continue"
+            disabled={!canSubmit}
+            onPress={() => router.push("/screens/OTPVerification")}
+            style={{ marginTop: 32 }}
+          />
         </ScrollView>
       </KeyboardAvoidingView>
     </LinearGradient>

@@ -14,39 +14,41 @@ export default function QuickServices() {
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
+        paddingHorizontal: 4,
       }}
     >
       {services.map((s, i) => (
-        <TouchableOpacity
-          key={i}
-          activeOpacity={0.85}
-          style={{ alignItems: "center" }}
-        >
+        <TouchableOpacity key={i} activeOpacity={0.85} style={{ alignItems: "center" }}>
           <View
             style={{
               backgroundColor: "rgba(255,255,255,0.06)",
-              padding: 10,
+              padding: 14,
               borderRadius: 18,
               borderWidth: 1,
-              borderColor: "rgba(255,255,255,0.16)",
-              shadowColor: "#000",
-              shadowOpacity: 0.18,
-              shadowRadius: 10,
-              elevation: 5,
+              borderColor: "rgba(255,255,255,0.14)",
+              shadowColor: "#C8102E",
+              shadowOpacity: 0.26,
+              shadowRadius: 12,
+              elevation: 6,
             }}
           >
             <Image
               source={s.icon}
-              style={{ width: 32, height: 32 }}
+              style={{
+                width: 30,
+                height: 30,
+                tintColor: "#FFFFFF", // <-- MAKE ICON WHITE
+              }}
               resizeMode="contain"
             />
           </View>
+
           <Text
             style={{
               fontFamily: "Poppins-Medium",
               fontSize: 11,
-              color: "#E5E7EB",
-              marginTop: 6,
+              color: "#FFFFFFDD",
+              marginTop: 8,
             }}
           >
             {s.name}

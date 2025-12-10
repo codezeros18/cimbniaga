@@ -10,12 +10,24 @@ export default function HeaderTop() {
         alignItems: "center",
       }}
     >
-      <Image
-        source={require("../../../assets/images/cimb-logo.webp")}
-        style={{ width: 140, height: 50 }}
-        resizeMode="contain"
-      />
+      {/* LOGO + GLOW WRAPPER */}
+      <View
+        style={{
+          shadowColor: "#C8102E",
+          shadowOpacity: 10,
+          shadowRadius: 40,
+          shadowOffset: { width: 12, height: 0 },
+          elevation: 12,
+        }}
+      >
+        <Image
+          source={require("../../../assets/images/cimb-logo.webp")}
+          style={{ width: 140, height: 50 }}
+          resizeMode="contain"
+        />
+      </View>
 
+      {/* LANGUAGE BUTTON */}
       <TouchableOpacity
         style={{
           paddingVertical: 4,
@@ -24,6 +36,7 @@ export default function HeaderTop() {
           borderWidth: 1,
           borderColor: "#ffffff55",
         }}
+        activeOpacity={0.8}
       >
         <Text
           style={{

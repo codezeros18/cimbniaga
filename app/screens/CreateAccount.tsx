@@ -5,14 +5,14 @@ import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import HeaderTop from "../components/createAccount/HeaderTop";
 import HeroSection from "../components/createAccount/HeroSection";
 import Illustration from "../components/createAccount/Illustration";
-import PrimaryButton from "../components/PrimaryButton"; // 🔥 new!
+import PrimaryButton from "../components/PrimaryButton";
 
 export default function CreateAccount() {
   const router = useRouter();
 
   return (
     <LinearGradient
-      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      colors={["#120606", "#3A0A0A", "#000000"]}
       style={{ flex: 1 }}
     >
       <SafeAreaView style={{ flex: 1 }}>
@@ -28,13 +28,14 @@ export default function CreateAccount() {
           <HeaderTop />
 
           {/* Hero */}
-          <View style={{ alignItems: "center", marginTop: 16 }}>
+          <View style={{ alignItems: "center", marginTop: 10 }}>
             <HeroSection />
+
             <MotiView
-              from={{ opacity: 0, scale: 0.88 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 250 }}
-              style={{ marginTop: 18 }}
+              from={{ opacity: 0, scale: 0.88, translateY: 30 }}
+              animate={{ opacity: 1, scale: 1, translateY: 0 }}
+              transition={{ type: "timing", duration: 600, delay: 300 }}
+              style={{ marginTop: 24 }}
             >
               <Illustration />
             </MotiView>
@@ -56,10 +57,11 @@ export default function CreateAccount() {
                   fontFamily: "Poppins-Medium",
                   fontSize: 15,
                   textAlign: "center",
-                  color: "#FFFFFFCC",
+                  color: "#FFFFFFAA",
                 }}
               >
-                Already have an account? Sign In
+                Already have an account?{" "}
+                <Text style={{ color: "#FF6E6E" }}>Sign In</Text>
               </Text>
             </TouchableOpacity>
           </View>

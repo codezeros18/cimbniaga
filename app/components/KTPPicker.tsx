@@ -5,9 +5,9 @@ import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 export default function KTPPicker({ imageUri, setImageUri }: any) {
   const pickFromGallery = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      return Alert.alert("Permission Denied", "We need gallery access.");
-    }
+    if (status !== "granted")
+      return Alert.alert("Permission Denied", "Gallery access required.");
+
     const res = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1,
@@ -17,9 +17,9 @@ export default function KTPPicker({ imageUri, setImageUri }: any) {
 
   const scanFromCamera = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== "granted") {
+    if (status !== "granted")
       return Alert.alert("Permission Denied", "Camera permission required.");
-    }
+
     const res = await ImagePicker.launchCameraAsync({ quality: 1 });
     if (!res.canceled) setImageUri(res.assets[0].uri);
   };
@@ -28,7 +28,6 @@ export default function KTPPicker({ imageUri, setImageUri }: any) {
     <View style={{ width: "100%", alignItems: "center" }}>
       {imageUri ? (
         <View style={{ width: "100%" }}>
-
           <Text
             style={{
               fontFamily: "Poppins-Medium",
@@ -40,7 +39,6 @@ export default function KTPPicker({ imageUri, setImageUri }: any) {
             KTP Preview
           </Text>
 
-          {/* Preview */}
           <View
             style={{
               width: "100%",
@@ -52,29 +50,23 @@ export default function KTPPicker({ imageUri, setImageUri }: any) {
               overflow: "hidden",
             }}
           >
-            <Image source={{ uri: imageUri }} style={{ width: "100%", height: "100%" }} />
+            <Image
+              source={{ uri: imageUri }}
+              style={{ width: "100%", height: "100%" }}
+            />
           </View>
 
-          {/* Remove */}
-          <TouchableOpacity
-            onPress={() => setImageUri(null)}
-            style={{
-              marginTop: 14,
-              alignSelf: "center",
-              borderRadius: 50,
-              paddingVertical: 10,
-              paddingHorizontal: 26,
-              backgroundColor: "#A71422",
-            }}
-          >
+          <TouchableOpacity onPress={() => setImageUri(null)}>
             <Text
               style={{
                 fontFamily: "Poppins-SemiBold",
-                fontSize: 14,
-                color: "#FFFFFF",
+                fontSize: 13,
+                color: "#FF6B6B",
+                textAlign: "center",
+                marginTop: 12,
               }}
             >
-              Remove Photo
+              Remove photo
             </Text>
           </TouchableOpacity>
         </View>
@@ -97,7 +89,7 @@ const UploadBtn = ({ label, onPress }: any) => (
       alignItems: "center",
       backgroundColor: "rgba(255,255,255,0.06)",
       borderWidth: 1,
-      borderColor: "rgba(255,255,255,0.12)",
+      borderColor: "rgba(255,255,255,0.14)",
     }}
   >
     <Text

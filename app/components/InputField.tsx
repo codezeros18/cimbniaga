@@ -7,26 +7,26 @@ export default function InputField({
   placeholder,
   value,
   onChangeText,
+  secureTextEntry,
   keyboardType = "default",
-  secureTextEntry = false,
+  textContentType,
+  autoComplete,
 }: any) {
   const [focused, setFocused] = useState(false);
   const [visible, setVisible] = useState(false);
 
   return (
-    <View style={{ width: "100%", marginBottom: 22 }}>
-      {label && (
-        <Text
-          style={{
-            fontFamily: "Poppins-Medium",
-            fontSize: 14,
-            marginBottom: 6,
-            color: "#F9FAFB",
-          }}
-        >
-          {label}
-        </Text>
-      )}
+    <View style={{ width: "100%", marginBottom: 20 }}>
+      <Text
+        style={{
+          fontFamily: "Poppins-Medium",
+          fontSize: 14,
+          color: "#FFFFFF",
+          marginBottom: 6,
+        }}
+      >
+        {label}
+      </Text>
 
       <View
         style={{
@@ -43,33 +43,25 @@ export default function InputField({
         <TextInput
           style={{
             flex: 1,
-            fontSize: 15,
             fontFamily: "Poppins-Regular",
             color: "#FFFFFF",
+            fontSize: 15,
           }}
           placeholder={placeholder}
           placeholderTextColor="rgba(255,255,255,0.4)"
           value={value}
           onChangeText={onChangeText}
           secureTextEntry={secureTextEntry && !visible}
+          keyboardType={keyboardType}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-
-          // 🚫 Disable Password Autofill Everywhere
-          textContentType="none"
-          autoComplete="off"
-          importantForAutofill="no"
-          autoCorrect={false}
-          autoCapitalize="none"
+          textContentType={textContentType}
+          autoComplete={autoComplete}
         />
 
         {secureTextEntry ? (
           <TouchableOpacity onPress={() => setVisible(!visible)}>
-            <Ionicons
-              name={visible ? "eye-off" : "eye"}
-              size={20}
-              color="#9CA3AF"
-            />
+            <Ionicons name={visible ? "eye-off" : "eye"} size={20} color="#9CA3AF" />
           </TouchableOpacity>
         ) : value.length > 0 ? (
           <Ionicons name="checkmark-circle" size={22} color="#C8102E" />

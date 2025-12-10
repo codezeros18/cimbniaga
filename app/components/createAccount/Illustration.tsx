@@ -1,17 +1,32 @@
+import { MotiView } from "moti";
 import { Dimensions, Image, View } from "react-native";
 const { width } = Dimensions.get("window");
 
 export default function Illustration() {
   return (
-    <View style={{ alignItems: "center" }}>
-      <Image
-        source={require("../../../assets/images/illustration-onboarding.webp")}
+    <MotiView
+      from={{ opacity: 0, translateY: 20 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{ delay: 450 }}
+    >
+      <View
         style={{
-          width: Math.min(width - 100, 260),
-          height: Math.min(width - 100, 260),
+          alignItems: "center",
+          shadowColor: "#C8102E",
+          shadowOpacity: 0.35,
+          shadowRadius: 25,
+          elevation: 15,
         }}
-        resizeMode="contain"
-      />
-    </View>
+      >
+        <Image
+          source={require("../../../assets/images/illustration-onboarding.webp")}
+          style={{
+            width: Math.min(width - 120, 250),
+            height: Math.min(width - 120, 250),
+          }}
+          resizeMode="contain"
+        />
+      </View>
+    </MotiView>
   );
 }

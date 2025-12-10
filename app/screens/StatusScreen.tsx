@@ -1,5 +1,8 @@
+import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
+import { MotiText, MotiView } from "moti";
+import React from "react";
 import { Image, Text, View } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 
@@ -8,76 +11,112 @@ export default function StatusScreen() {
 
   return (
     <LinearGradient
-      colors={["#130B0B", "#3A0A0A", "#000000"]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0, y: 1 }}
+      colors={["#120606", "#3A0A0A", "#000000"]}
       style={{
         flex: 1,
+        paddingHorizontal: 24,
         justifyContent: "center",
         alignItems: "center",
-        paddingHorizontal: 24,
       }}
     >
-      {/* Success Icon Glow */}
-      <View
+      {/* SUCCESS ICON */}
+      <MotiView
+        from={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", delay: 200 }}
         style={{
-          width: 120,
-          height: 120,
-          borderRadius: 60,
-          backgroundColor: "rgba(255,255,255,0.08)",
-          alignItems: "center",
+          width: 130,
+          height: 130,
+          borderRadius: 65,
+          backgroundColor: "rgba(200,16,46,0.15)",
           justifyContent: "center",
-          marginBottom: 26,
+          alignItems: "center",
           shadowColor: "#C8102E",
-          shadowOpacity: 0.35,
+          shadowOpacity: 0.4,
           shadowRadius: 20,
-          elevation: 10,
+          marginBottom: 20,
         }}
       >
         <Image
           source={require("../../assets/images/check.png")}
-          style={{ width: 60, height: 60, tintColor: "#FF4D4D" }}
+          style={{ width: 70, height: 70, tintColor: "#C8102E" }}
           resizeMode="contain"
         />
-      </View>
+      </MotiView>
 
-      {/* Title */}
-      <Text
+      {/* TITLE */}
+      <MotiText
+        from={{ opacity: 0, translateY: 14 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ delay: 320 }}
         style={{
           fontFamily: "Poppins-Bold",
-          fontSize: 26,
+          fontSize: 28,
           color: "#FFFFFF",
           textAlign: "center",
         }}
       >
-        You're All Set! 🎉
-      </Text>
+        You're All Set!
+      </MotiText>
 
-      {/* Subtitle */}
-      <Text
+      {/* SUBTITLE */}
+      <MotiText
+        from={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 450 }}
         style={{
           fontFamily: "Poppins-Regular",
           fontSize: 14,
-          color: "#E5E7EB",
+          color: "#FFFFFF99",
           textAlign: "center",
+          lineHeight: 22,
           marginTop: 10,
-          lineHeight: 20,
         }}
       >
-        We are reviewing your information.
-        {"\n"}You'll be notified once the account is active!
-      </Text>
+        Your account is now being reviewed securely.
+        We’ll notify you once it's ready to use.
+      </MotiText>
 
-      {/* Status Details */}
+      {/* SECURITY & TRUST INDICATOR */}
+      <MotiView
+        from={{ opacity: 0, translateY: 10 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ delay: 600 }}
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: 20,
+          paddingVertical: 10,
+          paddingHorizontal: 14,
+          borderRadius: 14,
+          backgroundColor: "rgba(255,255,255,0.06)",
+          borderWidth: 1,
+          borderColor: "rgba(255,255,255,0.10)",
+        }}
+      >
+        <Feather name="shield" size={16} color="#C8102E" />
+        <Text
+          style={{
+            fontFamily: "Poppins-Medium",
+            fontSize: 12,
+            color: "#FFFFFFCC",
+            marginLeft: 8,
+          }}
+        >
+          Biometric + document identity successfully matched.
+        </Text>
+      </MotiView>
+
+      {/* STATUS CARD */}
       <View
         style={{
           width: "100%",
-          marginTop: 32,
-          padding: 18,
-          backgroundColor: "rgba(255,255,255,0.06)",
-          borderRadius: 20,
+          backgroundColor: "rgba(255,255,255,0.05)",
+          borderRadius: 22,
+          padding: 20,
+          marginTop: 34,
           borderWidth: 1,
-          borderColor: "rgba(255,255,255,0.15)",
+          borderColor: "rgba(255,255,255,0.12)",
         }}
       >
         {[
@@ -85,42 +124,57 @@ export default function StatusScreen() {
           "Identity validation completed",
           "Final approval pending",
         ].map((item, index) => (
-          <View
+          <MotiView
             key={index}
+            from={{ opacity: 0, translateX: -12 }}
+            animate={{ opacity: 1, translateX: 0 }}
+            transition={{ delay: 750 + index * 200 }}
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginBottom: index !== 2 ? 12 : 0,
+              marginBottom: index !== 2 ? 14 : 0,
             }}
           >
             <View
               style={{
                 width: 8,
                 height: 8,
-                borderRadius: 4,
                 backgroundColor: "#C8102E",
-                marginRight: 12,
+                borderRadius: 4,
+                marginRight: 10,
               }}
             />
             <Text
               style={{
                 fontFamily: "Poppins-Medium",
-                color: "#F9FAFB",
                 fontSize: 13,
+                color: "#FFFFFFCC",
               }}
             >
               {item}
             </Text>
-          </View>
+          </MotiView>
         ))}
       </View>
 
       {/* CTA */}
       <PrimaryButton
         title="Back to Home"
-        style={{ marginTop: 42, width: "100%" }}
-        onPress={() => router.push("/screens/SignIn")}
+        onPress={() => router.push("/")}
+        style={{ marginTop: 46 }}
       />
+
+      {/* FOOTER */}
+      <Text
+        style={{
+          fontFamily: "Poppins-Light",
+          fontSize: 10,
+          color: "#FFFFFF55",
+          marginTop: 28,
+        }}
+      >
+        © 2025 CIMB Niaga Digital Banking
+      </Text>
     </LinearGradient>
   );
 }
