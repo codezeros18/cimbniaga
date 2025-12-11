@@ -13,10 +13,10 @@ export default function HeaderTop() {
       {/* LOGO + GLOW WRAPPER */}
       <View
         style={{
-          shadowColor: "#C8102E",
-          shadowOpacity: 10,
+          shadowColor: "#FFFFFF",
+          shadowOpacity: 1,
           shadowRadius: 40,
-          shadowOffset: { width: 12, height: 0 },
+          shadowOffset: { width: 30, height: 0 },
           elevation: 12,
         }}
       >

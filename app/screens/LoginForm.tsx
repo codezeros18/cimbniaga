@@ -71,7 +71,7 @@ export default function LoginForm() {
 
   return (
     <LinearGradient
-      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      colors={["#1A0A0A", "#3B0F12", "#7A0E18"]}
       style={{ flex: 1 }}
     >
       <SafeAreaView style={{ flex: 1 }}>

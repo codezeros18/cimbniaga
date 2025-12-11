@@ -11,7 +11,7 @@ export default function StatusScreen() {
 
   return (
     <LinearGradient
-      colors={["#120606", "#3A0A0A", "#000000"]}
+      colors={["#1A0A0A", "#3B0F12", "#7A0E18"]}
       style={{
         flex: 1,
         paddingHorizontal: 24,

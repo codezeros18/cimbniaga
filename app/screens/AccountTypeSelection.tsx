@@ -47,7 +47,7 @@ export default function AccountTypeSelection() {
 
   return (
     <LinearGradient
-      colors={["#140B0B", "#3A0A0A", "#000000"]}
+      colors={["#3D0C0C", "#7A0E0E", "#150404"]}
       style={{ flex: 1 }}
     >
       <SafeAreaView style={{ flex: 1 }}>

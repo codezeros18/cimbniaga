@@ -2,10 +2,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
-    Animated,
-    Easing,
-    Text,
-    View,
+  Animated,
+  Easing,
+  Text,
+  View,
 } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 
@@ -50,7 +50,7 @@ export default function IdentityValidationEngine() {
 
   return (
     <LinearGradient
-      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      colors={["#1A0A0A", "#3B0F12", "#7A0E18"]}
       style={{
         flex: 1,
         justifyContent: "center",

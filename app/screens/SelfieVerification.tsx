@@ -65,7 +65,7 @@ export default function SelfieVerification() {
 
   return (
     <LinearGradient
-      colors={["#120606", "#3A0A0A", "#000000"]}
+      colors={["#3D0C0C", "#7A0E0E", "#150404"]}
       style={{ flex: 1 }}
     >
       <SafeAreaView

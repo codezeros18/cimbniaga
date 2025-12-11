@@ -7,7 +7,7 @@ export default function AccountSummary() {
   return (
     <View style={{ paddingHorizontal: 24, marginTop: 18 }}>
       <LinearGradient
-        colors={["#0B0B0D", "#1E0F12"]}
+        colors={["#3D0C0C", "#7A0E0E", "#150404"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{

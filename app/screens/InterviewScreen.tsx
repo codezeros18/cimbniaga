@@ -75,7 +75,7 @@ export default function InterviewScreen() {
 
   return (
     <LinearGradient
-      colors={["#130B0B", "#3A0A0A", "#000000"]}
+      colors={["#3D0C0C", "#7A0E0E", "#150404"]}
       style={styles.container}
     >
       
